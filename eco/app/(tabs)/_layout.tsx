@@ -1,12 +1,17 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@clerk/expo";
 
 export default function TabLayout() {
+  const { isSignedIn, isLoaded } = useAuth();
   const { cartItems } = useCart();
+
+  if (!isLoaded) return null;
+  if (!isSignedIn && !__DEV__) return <Redirect href="/(auth)/sign-in" />;
 
   return (
     <Tabs
