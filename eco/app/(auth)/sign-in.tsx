@@ -40,29 +40,45 @@ export default function SignInScreen() {
 
     setLoading(true);
     try {
-      // No @clerk/expo v3, signIn.status no proxy é estático ("needs_identifier").
-      // O status real vem do RETORNO de create().
+      /*
+       * @clerk/expo v3 usa internamente a SignInFuture API.
+       * signIn.create() chama __internal_future.create() que retorna
+       * { error: ClerkError | null } — nunca { status, createdSessionId }.
+       * A checagem correta é result.error === null para sucesso.
+       */
       const result = await signIn.create({
         identifier: emailAddress.trim().toLowerCase(),
         password,
       });
 
-      console.log("[SignIn] result.status:", result?.status);
-      console.log("[SignIn] result.createdSessionId:", result?.createdSessionId);
+      console.log("[SignIn] result.error:", result?.error);
 
-      if (result?.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+      if (result?.error === null) {
+        // createdSessionId é lido dinamicamente do proxy após o create()
+        const sessionId = signIn.createdSessionId;
+        console.log("[SignIn] createdSessionId:", sessionId);
+        await setActive({ session: sessionId });
         router.replace("/");
       } else {
-        Alert.alert(
-          "Login incompleto",
-          `Status: "${result?.status}"\n\nVerifique as configurações no Clerk Dashboard.`
-        );
+        // erro retornado pelo Future API (não lançado como exceção)
+        const clerkErr = result?.error as any;
+        const code = clerkErr?.code ?? clerkErr?.errors?.[0]?.code ?? "";
+        const msg =
+          translateClerkCode(code) ||
+          clerkErr?.longMessage ||
+          clerkErr?.message ||
+          "Falha ao autenticar. Verifique e-mail e senha.";
+        Alert.alert("Falha no login", msg);
       }
     } catch (err: any) {
+      // Erros de rede ou exceções inesperadas
       const code = err?.errors?.[0]?.code ?? "";
-      const msg = translateClerkCode(code) || (err?.errors?.[0]?.longMessage ?? err?.errors?.[0]?.message ?? "Algo deu errado.");
-      console.error("[SignIn] Erro:", JSON.stringify(err, null, 2));
+      const msg =
+        translateClerkCode(code) ||
+        (err?.errors?.[0]?.longMessage ??
+        err?.errors?.[0]?.message ??
+        "Algo deu errado. Tente novamente.");
+      console.error("[SignIn] Exceção:", JSON.stringify(err, null, 2));
       Alert.alert("Falha no login", msg);
     } finally {
       setLoading(false);
