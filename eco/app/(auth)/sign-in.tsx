@@ -54,8 +54,13 @@ export default function SignInScreen() {
       console.log("[SignIn] result.error:", result?.error);
 
       if (result?.error === null) {
-        // createdSessionId é lido dinamicamente do proxy após o create()
-        const sessionId = signIn.createdSessionId;
+        /*
+         * No Clerk v3 (Future API), result é { data: SignInResource, error: null }.
+         * O createdSessionId vive em result.data — o proxy reativo do hook (signIn)
+         * não é atualizado de forma confiável no React Native nativo.
+         */
+        const sessionId =
+          (result as any)?.data?.createdSessionId ?? signIn.createdSessionId;
         console.log("[SignIn] createdSessionId:", sessionId);
         await setActive({ session: sessionId });
         router.replace("/");

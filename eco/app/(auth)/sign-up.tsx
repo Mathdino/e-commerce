@@ -105,27 +105,31 @@ export default function SignUpScreen() {
     setLoading(true);
     try {
       // 1. Cria o usuário
-      await signUp.create({
+      const signUpResult = await signUp.create({
         emailAddress: emailAddress.trim().toLowerCase(),
         password,
         firstName: firstName.trim(),
         lastName: lastName.trim(),
       });
 
-      console.log("[SignUp] status:", signUp.status);
-      console.log("[SignUp] unverifiedFields:", JSON.stringify(signUp.unverifiedFields));
-      console.log("[SignUp] createdSessionId:", signUp.createdSessionId);
+      // No Clerk v3 (Future API) o resultado fica em signUpResult.data;
+      // o proxy reativo (signUp) pode não atualizar de forma confiável no native.
+      const signUpData = (signUpResult as any)?.data ?? signUp;
+
+      console.log("[SignUp] status:", signUpData.status);
+      console.log("[SignUp] unverifiedFields:", JSON.stringify(signUpData.unverifiedFields));
+      console.log("[SignUp] createdSessionId:", signUpData.createdSessionId);
 
       // 2a. Cadastro já completo (verificação de e-mail desabilitada)
-      if (signUp.status === "complete") {
-        await setActive({ session: signUp.createdSessionId });
+      if (signUpData.status === "complete") {
+        await setActive({ session: signUpData.createdSessionId });
         router.replace("/");
         return;
       }
 
       // 2b. Precisa verificar e-mail
       // @clerk/expo v3: usa verifications.emailAddress.sendEmailCode()
-      if (signUp.unverifiedFields?.includes("email_address")) {
+      if (signUpData.unverifiedFields?.includes("email_address")) {
         await signUp.verifications.sendEmailCode();
         setPendingVerification(true);
         Alert.alert("Código enviado!", `Verifique: ${emailAddress.trim()}`);
@@ -134,7 +138,7 @@ export default function SignUpScreen() {
 
       Alert.alert(
         "Atenção",
-        `Status: "${signUp.status}"\nCampos: ${JSON.stringify(signUp.unverifiedFields)}`
+        `Status: "${signUpData.status}"\nCampos: ${JSON.stringify(signUpData.unverifiedFields)}`
       );
     } catch (err: any) {
       const msg =
@@ -159,12 +163,15 @@ export default function SignUpScreen() {
     setLoading(true);
     try {
       // @clerk/expo v3: usa verifications.emailAddress.verifyEmailCode()
-      await signUp.verifications.verifyEmailCode({ code: code.trim() });
+      const verifyResult = await signUp.verifications.verifyEmailCode({ code: code.trim() });
 
-      console.log("[SignUp] Após verificação - status:", signUp.status);
+      // Prefere result.data para compatibilidade com o native
+      const verifyData = (verifyResult as any)?.data ?? signUp;
 
-      if (signUp.status === "complete") {
-        await setActive({ session: signUp.createdSessionId });
+      console.log("[SignUp] Após verificação - status:", verifyData.status);
+
+      if (verifyData.status === "complete") {
+        await setActive({ session: verifyData.createdSessionId });
         router.replace("/");
       } else {
         Alert.alert("Verificação incompleta", `Status: ${signUp.status}`);
