@@ -6,6 +6,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { clerkWebhook } from "./controllers/webhooks.js";
 import makeAdmin from "./scripts/makeAdmin.js";
 import ProductsRouter from "./routes/productsRoutes.js";
+import CartRouter from "./routes/cartRoutes.js";
 
 const db = conectDB();
 
@@ -28,6 +29,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/products", ProductsRouter);
+
+app.use("/api/cart", CartRouter);
 
 await makeAdmin();
 
