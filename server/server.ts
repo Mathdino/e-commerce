@@ -7,6 +7,9 @@ import { clerkWebhook } from "./controllers/webhooks.js";
 import makeAdmin from "./scripts/makeAdmin.js";
 import ProductsRouter from "./routes/productsRoutes.js";
 import CartRouter from "./routes/cartRoutes.js";
+import OrderRouter from "./routes/ordersRoute.js";
+import AddressRouter from "./routes/addressRoutes.js";
+import AdminRouter from "./routes/adminRoutes.js";
 
 const db = conectDB();
 
@@ -31,6 +34,12 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/products", ProductsRouter);
 
 app.use("/api/cart", CartRouter);
+
+app.use("/api/orders", OrderRouter);
+
+app.use("/api/addresses", AddressRouter);
+
+app.use("/api/admin", AdminRouter);
 
 await makeAdmin();
 
