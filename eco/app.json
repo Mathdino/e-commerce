@@ -46,18 +46,7 @@
           }
         }
       ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "packagingOptions": {
-              "excludes": [
-                "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
-              ]
-            }
-          }
-        }
-      ]
+      "./plugins/withAndroidPackaging"
     ],
     "experiments": {
       "typedRoutes": true,
