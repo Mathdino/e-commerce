@@ -23,8 +23,8 @@ const productSchema = new Schema<IProduct>(
     category: {
       type: String,
       required: true,
-      enum: ["Homem", "Mulher", "Criança", "Calçado", "Mochila", "Outros"],
-      default: "Outros",
+      enum: ["Men", "Women", "Kids", "Shoes", "Bags", "Other"],
+      default: "Other",
     },
     stock: {
       type: Number,

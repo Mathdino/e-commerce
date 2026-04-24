@@ -15,7 +15,14 @@ export const protect = async (
         .json({ success: false, message: "Sem autorização" });
     }
 
-    let user = await User.findOne({ clientId: userId });
+    let user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Usuário não encontrado" });
+    }
+
     req.user = user;
     next();
   } catch (error: any) {

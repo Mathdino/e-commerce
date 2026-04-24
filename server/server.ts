@@ -10,8 +10,7 @@ import CartRouter from "./routes/cartRoutes.js";
 import OrderRouter from "./routes/ordersRoute.js";
 import AddressRouter from "./routes/addressRoutes.js";
 import AdminRouter from "./routes/adminRoutes.js";
-
-const db = conectDB();
+import { seedProducts } from "./scripts/seedProducts.js";
 
 const app = express();
 
@@ -21,7 +20,11 @@ await conectDB();
 app.post("/api/clerk", express.raw({ type: "application/json" }), clerkWebhook);
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+app.use((req: Request, res: Response, next) => {
+  res.header("Access-Control-Allow-Private-Network", "true");
+  next();
+});
 app.use(express.json());
 app.use(clerkMiddleware());
 
@@ -42,6 +45,9 @@ app.use("/api/addresses", AddressRouter);
 app.use("/api/admin", AdminRouter);
 
 await makeAdmin();
+
+// Seed Products
+// await seedProducts(process.env.MONGODB_URL as string);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

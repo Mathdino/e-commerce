@@ -18,6 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useAuth } from "@clerk/expo";
+import api from "@/constants/api";
 
 export default function AddProduct() {
   const router = useRouter();
@@ -52,11 +53,11 @@ export default function AddProduct() {
 
   // Add Product
   const handleSubmit = async () => {
-    if (!name || !price || !category || sizes.length < 1) {
+    if (!name || !description || !price || !category || sizes.length < 1 || images.length === 0) {
       Toast.show({
         type: "error",
         text1: "Missing Fields",
-        text2: "Please fill in all required fields",
+        text2: "Please fill in all required fields and add at least one image",
       });
       return;
     }
@@ -70,12 +71,56 @@ export default function AddProduct() {
         name,
         description,
         price,
-        stock: stock || 0,
+        stock: stock || "0",
         category,
         sizes,
         isFeatured: String(isFeatured),
       };
-    } catch (error) {}
+
+      Object.entries(fields).forEach(([key, value]) =>
+        formData.append(key, value),
+      );
+
+      //Images
+      for (const [i, uri] of images.entries()) {
+        const filename = `image_${i}.jpg`;
+
+        formData.append("images", {
+          uri,
+          name: filename,
+          type: "image/jpeg",
+        } as any);
+      }
+
+      // Use fetch nativo — axios + FormData + arquivos falha no Android (ERR_NETWORK)
+      const baseURL = api.defaults.baseURL;
+      const response = await fetch(`${baseURL}/products`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // NÃO setar Content-Type — fetch define automaticamente com boundary
+        },
+        body: formData,
+      });
+      const data = await response.json();
+      if (!data?.success) throw new Error(data?.message || "Falha ao adicionar produto");
+
+      Toast.show({
+        type: "success",
+        text1: "Sucesso",
+        text2: "Produto criado com sucesso",
+      });
+      router.replace("/admin/products");
+    } catch (error: any) {
+      console.log("ERRO COMPLETO:", error?.message);
+      Toast.show({
+        type: "error",
+        text1: "Falha ao criar produto",
+        text2: error?.message || "Por favor, tente novamente mais tarde",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -219,7 +264,7 @@ export default function AddProduct() {
 
         {/* DESCRIPTION */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Description
+          Description *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-6 text-primary h-24"

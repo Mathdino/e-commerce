@@ -9,12 +9,12 @@ export const COLORS = {
 };
 
 export const CATEGORIES = [
-  { id: 1, name: "Homem", icon: "man-outline" },
-  { id: 2, name: "Mulher", icon: "woman-outline" },
-  { id: 3, name: "Criança", icon: "happy-outline" },
-  { id: 4, name: "Calçado", icon: "footsteps-outline" },
-  { id: 5, name: "Mochila", icon: "briefcase-outline" },
-  { id: 6, name: "Outros", icon: "grid-outline" },
+  { id: 1, name: "Men", icon: "man-outline" },
+  { id: 2, name: "Women", icon: "woman-outline" },
+  { id: 3, name: "Kids", icon: "happy-outline" },
+  { id: 4, name: "Shoes", icon: "footsteps-outline" },
+  { id: 5, name: "Bags", icon: "briefcase-outline" },
+  { id: 6, name: "Other", icon: "grid-outline" },
 ];
 
 export const PROFILE_MENU = [

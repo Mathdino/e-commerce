@@ -9,15 +9,18 @@ import React, { useEffect, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "expo-router";
 import { Address } from "@/constants/types";
-import { dummyAddress } from "@/assets/assets";
 import Toast from "react-native-toast-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/constants";
 import Header from "@/components/Header";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "@clerk/expo";
+import api from "@/constants/api";
 
 export default function Checkout() {
-  const { cartTotal } = useCart();
+  const { getToken } = useAuth();
+
+  const { cartTotal, clearCart } = useCart();
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -31,12 +34,28 @@ export default function Checkout() {
   const total = cartTotal + shipping + tax;
 
   const fetchAddresses = async () => {
-    const addrList = dummyAddress;
-    if (addrList.length > 0) {
-      const def = addrList.find((a: any) => a.isDefault) || addrList[0];
-      setSelectedAddress(def as Address);
+    try {
+      const token = await getToken();
+      const { data } = await api.get("/addresses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const addrList = data.data;
+      if (addrList.length > 0) {
+        const defAddress =
+          addrList.find((a: Address) => a.isDefault) || addrList[0];
+        setSelectedAddress(defAddress);
+      }
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Erro ao obter endereços",
+      });
+    } finally {
+      setPageLoading(false);
     }
-    setPageLoading(false);
   };
 
   const handlePlaceOrder = async () => {
@@ -56,7 +75,37 @@ export default function Checkout() {
         text2: "Stripe não está disponível no momento.",
       });
 
-    router.replace("/orders");
+    setLoading(true);
+    try {
+      const payload = {
+        shippingAddress: selectedAddress,
+        notes: "Nenhuma observação",
+        paymentMethod: "cash",
+      };
+
+      const token = await getToken();
+      const { data } = await api.post("/orders", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (data.success) {
+        await clearCart();
+        Toast.show({
+          type: "success",
+          text1: "Pedido realizado com sucesso!",
+        });
+        router.replace("/orders");
+      }
+    } catch (error: any) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Erro ao realizar pedido",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

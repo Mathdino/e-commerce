@@ -6,16 +6,18 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
-import { BANNERS, dummyProducts } from "@/assets/assets";
+import { BANNERS } from "@/assets/assets";
 import { useRouter } from "expo-router";
 import { CATEGORIES } from "@/constants";
 import CategoryItem from "@/components/CategoryItem";
 import { Product } from "@/constants/types";
 import ProductCart from "@/components/ProductCart";
+import api from "@/constants/api";
 
 const { width } = Dimensions.get("window");
 
@@ -26,8 +28,15 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
-    setProducts(dummyProducts);
-    setLoading(false);
+    try {
+      const { data } = await api.get("products");
+      setProducts(data.data);
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Error", "Falha ao carregar produtos");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

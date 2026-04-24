@@ -68,7 +68,7 @@ export interface IProduct extends Document {
   comparePrice?: number;
   images: string[];
   sizes: string[];
-  category: "Homem" | "Mulher" | "Criança" | "Calçado" | "Mochila" | "Outros";
+  category: "Men" | "Women" | "Kids" | "Shoes" | "Bags" | "Other";
   stock: number;
   ratings: {
     average: number;

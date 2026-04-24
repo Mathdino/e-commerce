@@ -8,8 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import CartItem from "@/components/CartItem";
 
 export default function Cart() {
-  const { cartItems, cartTotal, removeFromCart, updateCartQuantity } =
-    useCart();
+  const { cartItems, cartTotal, removeFromCart, updateQuantity } = useCart();
 
   const router = useRouter();
 
@@ -31,9 +30,7 @@ export default function Cart() {
                 key={index}
                 item={item}
                 onRemove={() => removeFromCart(item.id, item.size)}
-                onUpdateQuantity={(q) =>
-                  updateCartQuantity(item.id, item.size, q)
-                }
+                onUpdateQuantity={(q) => updateQuantity(item.id, item.size, q)}
               />
             ))}
           </ScrollView>
