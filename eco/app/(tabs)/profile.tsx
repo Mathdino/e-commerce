@@ -18,7 +18,10 @@ export default function Profile() {
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
-      <Header title="Perfil" />
+      <Header
+        titleImage={require("@/assets/images/perfil-text.png")}
+        showBack
+      />
 
       <ScrollView
         className="flex-1 px-4"

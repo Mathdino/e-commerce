@@ -1,5 +1,5 @@
 import { Tabs, useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, ActivityIndicator, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants";
@@ -8,14 +8,23 @@ import { useUser } from "@clerk/expo";
 export default function AdminLayout() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
+  const [refreshed, setRefreshed] = useState(false);
 
   useEffect(() => {
-    if (isLoaded && (!user || user.publicMetadata?.role !== "admin")) {
+    if (!isLoaded || !user) return;
+
+    /* Força reload do Clerk para pegar publicMetadata mais recente */
+    user.reload().finally(() => setRefreshed(true));
+  }, [isLoaded]);
+
+  useEffect(() => {
+    if (!isLoaded || !refreshed) return;
+    if (!user || user.publicMetadata?.role !== "admin") {
       router.replace("/(tabs)");
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, refreshed, user]);
 
-  if (!isLoaded) {
+  if (!isLoaded || !refreshed) {
     return (
       <View className="flex-1 justify-center items-center bg-surface">
         <ActivityIndicator size="large" color={COLORS.primary} />

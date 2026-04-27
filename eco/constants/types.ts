@@ -62,6 +62,7 @@ export type CategoryItemProps = {
 
 export type HeaderProps = {
     title?: string;
+    titleImage?: any;
     showBack?: boolean;
     showSearch?: boolean;
     showCart?: boolean;

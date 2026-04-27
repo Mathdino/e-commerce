@@ -14,13 +14,11 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
-import { useSignIn, useClerk } from "@clerk/expo";
+import { useSignIn } from "@clerk/expo";
 import { COLORS } from "@/constants";
 
 export default function SignInScreen() {
-  // @clerk/expo v3: useSignIn retorna { signIn, ... } e setActive vem de useClerk()
   const { signIn } = useSignIn();
-  const { setActive } = useClerk();
   const router = useRouter();
 
   const [emailAddress, setEmailAddress] = useState("");
@@ -40,50 +38,47 @@ export default function SignInScreen() {
 
     setLoading(true);
     try {
-      /*
-       * @clerk/expo v3 usa internamente a SignInFuture API.
-       * signIn.create() chama __internal_future.create() que retorna
-       * { error: ClerkError | null } — nunca { status, createdSessionId }.
-       * A checagem correta é result.error === null para sucesso.
-       */
-      const result = await signIn.create({
+      const { error: createError } = await signIn.create({
         identifier: emailAddress.trim().toLowerCase(),
         password,
       });
 
-      console.log("[SignIn] result.error:", result?.error);
-
-      if (result?.error === null) {
-        /*
-         * No Clerk v3 (Future API), result é { data: SignInResource, error: null }.
-         * O createdSessionId vive em result.data — o proxy reativo do hook (signIn)
-         * não é atualizado de forma confiável no React Native nativo.
-         */
-        const sessionId =
-          (result as any)?.data?.createdSessionId ?? signIn.createdSessionId;
-        console.log("[SignIn] createdSessionId:", sessionId);
-        await setActive({ session: sessionId });
-        router.replace("/");
-      } else {
-        // erro retornado pelo Future API (não lançado como exceção)
-        const clerkErr = result?.error as any;
-        const code = clerkErr?.code ?? clerkErr?.errors?.[0]?.code ?? "";
+      if (createError) {
+        const err = createError as any;
+        const code = err?.errors?.[0]?.code ?? err?.code ?? "";
         const msg =
           translateClerkCode(code) ||
-          clerkErr?.longMessage ||
-          clerkErr?.message ||
+          err?.errors?.[0]?.longMessage ||
+          err?.longMessage ||
+          err?.message ||
           "Falha ao autenticar. Verifique e-mail e senha.";
         Alert.alert("Falha no login", msg);
+        return;
       }
+
+      const { error: finalizeError } = await signIn.finalize();
+
+      if (finalizeError) {
+        const err = finalizeError as any;
+        const code = err?.errors?.[0]?.code ?? err?.code ?? "";
+        const msg =
+          translateClerkCode(code) ||
+          err?.errors?.[0]?.longMessage ||
+          err?.longMessage ||
+          err?.message ||
+          "Falha ao finalizar login. Tente novamente.";
+        Alert.alert("Falha no login", msg);
+        return;
+      }
+
+      router.replace("/");
     } catch (err: any) {
-      // Erros de rede ou exceções inesperadas
       const code = err?.errors?.[0]?.code ?? "";
       const msg =
         translateClerkCode(code) ||
-        (err?.errors?.[0]?.longMessage ??
-        err?.errors?.[0]?.message ??
-        "Algo deu errado. Tente novamente.");
-      console.error("[SignIn] Exceção:", JSON.stringify(err, null, 2));
+        err?.errors?.[0]?.longMessage ||
+        err?.errors?.[0]?.message ||
+        "Algo deu errado. Tente novamente.";
       Alert.alert("Falha no login", msg);
     } finally {
       setLoading(false);

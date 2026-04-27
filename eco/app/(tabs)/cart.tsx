@@ -17,7 +17,11 @@ export default function Cart() {
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
-      <Header title="Meu carrinho" showBack />
+      <Header
+        titleImage={require("@/assets/images/carrinho-text.png")}
+        showBack
+        showCart
+      />
 
       {cartItems.length > 0 ? (
         <>

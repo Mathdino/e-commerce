@@ -13,7 +13,7 @@ export default function Favorites() {
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
-      <Header title="Favoritos" showMenu showCart />
+      <Header titleImage={require("@/assets/images/favoritos-text.png")} showMenu showCart />
 
       {wishlist.length > 0 ? (
         <ScrollView

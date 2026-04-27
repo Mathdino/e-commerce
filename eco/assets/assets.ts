@@ -1,3 +1,16 @@
+export const ESTILOS = [
+  { id: 1, name: "Corrida", image: require("../assets/images/estilos/corrida.png") },
+  { id: 2, name: "Basquete", image: require("../assets/images/estilos/basquete.png") },
+  { id: 3, name: "Ciclismo", image: require("../assets/images/estilos/ciclismo.png") },
+  { id: 4, name: "Natação", image: require("../assets/images/estilos/natacao.png") },
+  { id: 5, name: "Skate", image: require("../assets/images/estilos/skate.png") },
+  { id: 6, name: "Tênis", image: require("../assets/images/estilos/tenis.png") },
+  { id: 7, name: "Vôlei", image: require("../assets/images/estilos/volei.png") },
+  { id: 8, name: "Basebol", image: require("../assets/images/estilos/baisebol.png") },
+];
+
+export const F_BUTTON = require("../assets/images/f-button.png");
+
 export const BANNERS = [
   {
     id: 1,
