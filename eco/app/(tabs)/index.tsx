@@ -72,24 +72,24 @@ export default function Home() {
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
-            className="w-full h-48 rounded-xl"
+            className="w-full h-40 rounded-xl"
             scrollEventThrottle={16}
           >
             {BANNERS.map((banner, index) => (
               <View
                 key={index}
-                className="relative w-full h-48 bg-gray-200 overflow-hidden"
-                style={{ width: width - 32 }}
+                className="relative w-full h-40 bg-gray-200 overflow-hidden"
+                style={{ width: width - 28 }}
               >
                 <Image
-                  source={{ uri: banner.image }}
-                  className="w-full h-full"
+                  source={banner.image}
+                  className="w-full h-40"
                   resizeMode="cover"
                 />
 
                 <View className="absolute inset-0 bg-black/40" />
 
-                <View className="absolute bottom-4 left-4 z-10">
+                {/* <View className="absolute bottom-4 left-4 z-10">
                   <Text className="text-white text-2xl font-bold">
                     {banner.title}
                   </Text>
@@ -101,7 +101,7 @@ export default function Home() {
                       Get Now
                     </Text>
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
             ))}
           </ScrollView>

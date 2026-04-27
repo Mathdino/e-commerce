@@ -204,7 +204,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const itemCount = cartItems.reduce((acc, cur) => acc + cur.quantity, 0);
 
   useEffect(() => {
-    if (!isSignedIn) {
+    if (isSignedIn) {
       fetchCart();
     } else {
       setCartItems([]);
