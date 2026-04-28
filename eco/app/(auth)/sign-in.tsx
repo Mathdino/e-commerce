@@ -18,7 +18,7 @@ import { useSignIn } from "@clerk/expo";
 import { COLORS } from "@/constants";
 
 export default function SignInScreen() {
-  const { signIn } = useSignIn();
+  const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
 
   const [emailAddress, setEmailAddress] = useState("");
@@ -27,7 +27,7 @@ export default function SignInScreen() {
   const [loading, setLoading] = useState(false);
 
   const onSignInPress = async () => {
-    if (!signIn) {
+    if (!isLoaded || !signIn || !setActive) {
       Alert.alert("Erro", "Serviço indisponível. Tente novamente.");
       return;
     }
@@ -38,40 +38,17 @@ export default function SignInScreen() {
 
     setLoading(true);
     try {
-      const { error: createError } = await signIn.create({
+      const result = await signIn.create({
         identifier: emailAddress.trim().toLowerCase(),
         password,
       });
 
-      if (createError) {
-        const err = createError as any;
-        const code = err?.errors?.[0]?.code ?? err?.code ?? "";
-        const msg =
-          translateClerkCode(code) ||
-          err?.errors?.[0]?.longMessage ||
-          err?.longMessage ||
-          err?.message ||
-          "Falha ao autenticar. Verifique e-mail e senha.";
-        Alert.alert("Falha no login", msg);
-        return;
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        router.replace("/");
+      } else {
+        Alert.alert("Falha no login", "Verificação adicional necessária. Tente novamente.");
       }
-
-      const { error: finalizeError } = await signIn.finalize();
-
-      if (finalizeError) {
-        const err = finalizeError as any;
-        const code = err?.errors?.[0]?.code ?? err?.code ?? "";
-        const msg =
-          translateClerkCode(code) ||
-          err?.errors?.[0]?.longMessage ||
-          err?.longMessage ||
-          err?.message ||
-          "Falha ao finalizar login. Tente novamente.";
-        Alert.alert("Falha no login", msg);
-        return;
-      }
-
-      router.replace("/");
     } catch (err: any) {
       const code = err?.errors?.[0]?.code ?? "";
       const msg =
