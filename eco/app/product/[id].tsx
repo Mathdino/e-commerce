@@ -164,32 +164,39 @@ export default function ProductDetails() {
           <Text className="text-2xl font-bold text-primary">
             R${product.price.toFixed(2).replace(".", ",")}
           </Text>
-          {/* Descrição */}
-          {product.sizes && product.sizes.length > 0 && (
-            <>
-              <Text className="text-base font-bold text-primary mb-2 mt-3">
-                Tamanhos disponíveis:
-              </Text>
-              <View className="flex-row gap-3 mb-6 flex-wrap">
-                {product.sizes.map((size) => (
-                  <TouchableOpacity
-                    key={size}
-                    onPress={() => {
-                      setSelectedSize(size);
-                    }}
-                    className={`w-12 h-12 rounded-full items-center justify-center border ${size === selectedSize ? "bg-primary border-primary" : "bg-white border-gray-100"} 
-                    }`}
-                  >
-                    <Text
-                      className={`text-sm font-medium ${size === selectedSize ? "text-white" : "text-primary"}`}
+          {/* Tamanhos */}
+          {product.sizes && product.sizes.length > 0 && (() => {
+            const sizes = product.sizes!
+              .flatMap((s) => s.split(",").map((t) => t.trim()).filter(Boolean));
+            return (
+              <>
+                <Text className="text-base font-bold text-primary mb-2 mt-3">
+                  Tamanhos disponíveis:
+                </Text>
+                <View className="flex-row gap-3 mb-6 flex-wrap">
+                  {sizes.map((size) => (
+                    <TouchableOpacity
+                      key={size}
+                      onPress={() => setSelectedSize(size)}
+                      className={`w-12 h-12 rounded-full items-center justify-center border ${
+                        size === selectedSize
+                          ? "bg-primary border-primary"
+                          : "bg-white border-gray-200"
+                      }`}
                     >
-                      {size}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </>
-          )}
+                      <Text
+                        className={`text-sm font-medium ${
+                          size === selectedSize ? "text-white" : "text-primary"
+                        }`}
+                      >
+                        {size}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </>
+            );
+          })()}
 
           {/* Descrição do Produto */}
           <Text className="text-base font-bold text-primary mb-2">

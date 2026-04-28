@@ -6,23 +6,44 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants";
 import { useWishlist } from "@/context/WishlistContext";
 
+const PIX_DISCOUNT = 0.05;
+
+function getCategoryName(category: ProductCardProps["product"]["category"]): string {
+  if (!category) return "";
+  if (typeof category === "string") return category;
+  return category.name ?? "";
+}
+
+function formatBRL(value: number): string {
+  return value.toFixed(2).replace(".", ",");
+}
+
 export default function ProductCart({ product }: ProductCardProps) {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const isLiked = isInWishlist(product._id);
 
+  const originalPrice = product.price;
+  const pixPrice = originalPrice * (1 - PIX_DISCOUNT);
+  const categoryName = getCategoryName(product.category);
+
   return (
     <Link href={`/product/${product._id}`} asChild>
-      <TouchableOpacity className="w-[48%] mb-4 bg-white rounded-lg overflow-hidden">
-        <View className="relative h-56 w-full bg-gray-100">
+      <TouchableOpacity
+        className="w-[48%] mb-4 bg-white rounded-xl overflow-hidden"
+        style={{ shadowColor: "#000", shadowOpacity: 0.06, shadowRadius: 6, elevation: 2 }}
+      >
+        {/* Imagem */}
+        <View className="relative w-full bg-gray-100" style={{ aspectRatio: 3 / 4 }}>
           <Image
             source={{ uri: product.images?.[0] ?? "" }}
             className="w-full h-full"
             resizeMode="cover"
           />
 
-          {/*Favoritos */}
+          {/* Favorito */}
           <TouchableOpacity
-            className="absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-sm"
+            className="absolute top-2 right-2 z-10"
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             onPress={(e) => {
               e.stopPropagation();
               toggleWishlist(product);
@@ -30,14 +51,15 @@ export default function ProductCart({ product }: ProductCardProps) {
           >
             <Ionicons
               name={isLiked ? "heart" : "heart-outline"}
-              size={20}
-              color={isLiked ? COLORS.accent : COLORS.primary}
+              size={22}
+              color={isLiked ? COLORS.accent : "#fff"}
+              style={{ textShadowColor: "rgba(0,0,0,0.4)", textShadowRadius: 4 }}
             />
           </TouchableOpacity>
 
-          {/* Features */}
+          {/* Badge Promoção */}
           {product.isFeatured && (
-            <View className="absolute top-2 left-2 bg-black py-1 px-2 rounded">
+            <View className="absolute top-2 left-2 bg-black py-0.5 px-2 rounded">
               <Text className="text-white text-xs font-bold uppercase">
                 Promoção
               </Text>
@@ -47,20 +69,30 @@ export default function ProductCart({ product }: ProductCardProps) {
 
         {/* Info */}
         <View className="p-3">
-          <View className="flex-row items-center mb-1">
-            <Ionicons name="star" size={14} color="#Ffd700" />
-            <Text className="text-xs ml-1 text-secondary">4.6</Text>
-          </View>
-          <Text
-            className="text-sm font-medium text-primary mb-1"
-            numberOfLines={1}
-          >
+          {/* Nome */}
+          <Text className="text-sm font-bold text-primary mb-0.5" numberOfLines={2}>
             {product.name}
           </Text>
-          <View className="flex-row items-center">
-            <Text className="text-base font-bold text-primary">
-              R$ {product.price.toFixed(2).replace(".", ",")}
+
+          {/* Categoria */}
+          {categoryName !== "" && (
+            <Text className="text-xs text-secondary mb-2">{categoryName}</Text>
+          )}
+
+          {/* Preço PIX */}
+          <Text className="text-base font-bold text-primary leading-tight">
+            R$ {formatBRL(pixPrice)}{" "}
+            <Text className="text-xs font-normal text-secondary">no Pix</Text>
+          </Text>
+
+          {/* Preço original + badge */}
+          <View className="flex-row items-center gap-2 mt-0.5">
+            <Text className="text-xs text-secondary line-through">
+              R$ {formatBRL(originalPrice)}
             </Text>
+            <View className="bg-green-100 rounded px-1.5 py-0.5">
+              <Text className="text-xs font-bold text-green-700">5% off</Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>

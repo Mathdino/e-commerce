@@ -14,11 +14,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
-import { useSignIn } from "@clerk/expo";
+import { useSignIn, useClerk } from "@clerk/expo";
 import { COLORS } from "@/constants";
 
 export default function SignInScreen() {
-  const { signIn, setActive, isLoaded } = useSignIn();
+  // @clerk/expo v3: useSignIn retorna { signIn, ... } e setActive vem de useClerk()
+  const { signIn } = useSignIn();
+  const { setActive } = useClerk();
   const router = useRouter();
 
   const [emailAddress, setEmailAddress] = useState("");
@@ -27,7 +29,7 @@ export default function SignInScreen() {
   const [loading, setLoading] = useState(false);
 
   const onSignInPress = async () => {
-    if (!isLoaded || !signIn || !setActive) {
+    if (!signIn) {
       Alert.alert("Erro", "Serviço indisponível. Tente novamente.");
       return;
     }
@@ -38,16 +40,30 @@ export default function SignInScreen() {
 
     setLoading(true);
     try {
+      /*
+       * @clerk/expo v3 usa internamente a SignInFuture API.
+       * signIn.create() retorna { data: SignInResource, error: ClerkError | null }
+       * A checagem correta é result.error === null para sucesso.
+       */
       const result = await signIn.create({
         identifier: emailAddress.trim().toLowerCase(),
         password,
       });
 
-      if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+      if (result?.error === null) {
+        const sessionId =
+          (result as any)?.data?.createdSessionId ?? signIn.createdSessionId;
+        await setActive({ session: sessionId });
         router.replace("/");
       } else {
-        Alert.alert("Falha no login", "Verificação adicional necessária. Tente novamente.");
+        const clerkErr = result?.error as any;
+        const code = clerkErr?.code ?? clerkErr?.errors?.[0]?.code ?? "";
+        const msg =
+          translateClerkCode(code) ||
+          clerkErr?.longMessage ||
+          clerkErr?.message ||
+          "Falha ao autenticar. Verifique e-mail e senha.";
+        Alert.alert("Falha no login", msg);
       }
     } catch (err: any) {
       const code = err?.errors?.[0]?.code ?? "";

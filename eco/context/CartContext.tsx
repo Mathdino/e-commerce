@@ -37,7 +37,7 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const { getToken, isSignedIn } = useAuth();
+  const { getToken, isSignedIn, isLoaded } = useAuth();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cartTotal, setCartTotal] = useState(0);
@@ -204,13 +204,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const itemCount = cartItems.reduce((acc, cur) => acc + cur.quantity, 0);
 
   useEffect(() => {
+    if (!isLoaded) return;
     if (isSignedIn) {
       fetchCart();
     } else {
       setCartItems([]);
       setCartTotal(0);
     }
-  }, [isSignedIn]);
+  }, [isLoaded, isSignedIn]);
 
   return (
     <CartContext.Provider
