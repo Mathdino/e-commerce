@@ -44,6 +44,8 @@ import {
   User,
   X,
   XCircle,
+  Shirt,
+  Rose,
 } from "lucide-react-native";
 
 type IconName =
@@ -157,7 +159,8 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
   "star-outline": Star,
   "storefront-outline": Store,
   "trash-outline": Trash2,
-  "woman-outline": User,
+  "woman-outline": Rose,
+  "shirt-outline": Shirt,
 };
 
 // Ícones que devem ser exibidos preenchidos (solid)

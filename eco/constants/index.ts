@@ -9,13 +9,20 @@ export const COLORS = {
 };
 
 export const CATEGORIES = [
-  { id: 1, name: "Men", icon: "man-outline" },
-  { id: 2, name: "Women", icon: "woman-outline" },
-  { id: 3, name: "Kids", icon: "happy-outline" },
-  { id: 4, name: "Shoes", icon: "footsteps-outline" },
-  { id: 5, name: "Bags", icon: "briefcase-outline" },
-  { id: 6, name: "Other", icon: "grid-outline" },
+  { id: 7, name: "Camisa", value: "Camisa", icon: "shirt-outline" },
+  { id: 4, name: "Chuteira", value: "Chuteira", icon: "footsteps-outline" },
+  { id: 1, name: "Homem", value: "Homem", icon: "man-outline" },
+  { id: 2, name: "Mulher", value: "Mulher", icon: "woman-outline" },
+  { id: 3, name: "Infantil", value: "Infantil", icon: "happy-outline" },
+  { id: 5, name: "Mochila", value: "Mochila", icon: "briefcase-outline" },
+  { id: 6, name: "Outros", value: "Outros", icon: "grid-outline" },
 ];
+
+/** Retorna o rótulo em português para um valor de categoria do backend */
+export const getCategoryLabel = (value: string): string => {
+  const cat = CATEGORIES.find((c) => c.value === value);
+  return cat ? cat.name : value;
+};
 
 export const PROFILE_MENU = [
   { id: 1, title: "Meus Pedidos", icon: "receipt-outline", route: "/orders" },
@@ -31,9 +38,9 @@ export const PROFILE_MENU = [
 
 export const getStatusColor = (status: string) => {
   switch (status) {
-    case "separado":
-      return "bg-yellow-50 text-yellow-900";
     case "processando":
+      return "bg-yellow-50 text-yellow-900";
+    case "separado":
       return "bg-indigo-50 text-indigo-900";
     case "enviado":
       return "bg-purple-50 text-purple-900";

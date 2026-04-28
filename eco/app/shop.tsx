@@ -9,7 +9,7 @@ import {
 import React, { useState, useEffect, useRef } from "react";
 import { Product } from "@/constants/types";
 import Header from "@/components/Header";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 import ProductCart from "@/components/ProductCart";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,10 +17,11 @@ import api from "@/constants/api";
 import { useLocalSearchParams } from "expo-router";
 
 export default function Shop() {
-  const { search: initialSearch, category: initialCategory } = useLocalSearchParams<{
-    search?: string;
-    category?: string;
-  }>();
+  const { search: initialSearch, category: initialCategory } =
+    useLocalSearchParams<{
+      search?: string;
+      category?: string;
+    }>();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -80,13 +81,8 @@ export default function Shop() {
 
       <View className="flex-row gap-2 mb-3 mx-4 my-2">
         {/* Buscar Produtos */}
-        <View className="flex-1 flex-row items-center bg-white rounded-xl border border-gray-100">
-          <Ionicons
-            name="search"
-            className="ml-4"
-            size={20}
-            color={COLORS.secondary}
-          />
+        <View className="flex-1 flex-row items-center bg-white rounded-xl border border-gray-100 px-4">
+          <Icon name="search" size={20} color={COLORS.secondary} />
           <TextInput
             className="flex-1 ml-2 text-primary px-4 py-3"
             placeholder="Buscar produtos..."
@@ -98,16 +94,19 @@ export default function Shop() {
           />
           {searchText.length > 0 && (
             <TouchableOpacity
-              onPress={() => { setSearchText(""); fetchProducts(1, ""); }}
+              onPress={() => {
+                setSearchText("");
+                fetchProducts(1, "");
+              }}
               className="pr-3"
             >
-              <Ionicons name="close-circle" size={18} color={COLORS.secondary} />
+              <Icon name="close-circle" size={18} color={COLORS.secondary} />
             </TouchableOpacity>
           )}
         </View>
         {/* Filtro */}
         <TouchableOpacity className="w-12 h-12 bg-gray-800 rounded-xl items-center justify-center">
-          <Ionicons name="filter" size={24} color="white" />
+          <Icon name="filter" size={24} color="white" />
         </TouchableOpacity>
       </View>
 

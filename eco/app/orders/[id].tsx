@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View, ActivityIndicator } from "react-native";
@@ -75,7 +75,7 @@ export default function OrderDetails() {
     {
       title: "Em Processo",
       date: "",
-      completed: ["processando", "enviado", "entregue"].includes(
+      completed: ["separado", "enviado", "entregue"].includes(
         order.orderStatus,
       ),
     },
@@ -174,11 +174,7 @@ export default function OrderDetails() {
             Detalhes de Entrega
           </Text>
           <View className="flex-row items-center mb-2">
-            <Ionicons
-              name="location-outline"
-              size={20}
-              color={COLORS.secondary}
-            />
+            <Icon name="location-outline" size={20} color={COLORS.secondary} />
             <Text className="text-secondary ml-2 flex-1">
               {order.shippingAddress?.street}, {order.shippingAddress?.city},{" "}
               {order.shippingAddress?.zipCode}, {order.shippingAddress?.country}

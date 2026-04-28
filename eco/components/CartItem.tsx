@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { CartItemProps } from "@/constants/types";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 
 export default function CartItem({
@@ -32,7 +32,7 @@ export default function CartItem({
           </View>
           {/* Botão de remover */}
           <TouchableOpacity onPress={onRemove}>
-            <Ionicons name="close-circle-outline" size={20} color="#ff4c3b" />
+            <Icon name="close-circle-outline" size={20} color="#ff4c3b" />
           </TouchableOpacity>
         </View>
 
@@ -49,7 +49,7 @@ export default function CartItem({
                 onUpdateQuantity && onUpdateQuantity(item.quantity - 1)
               }
             >
-              <Ionicons name="remove" size={16} color={COLORS.primary} />
+              <Icon name="remove" size={16} color={COLORS.primary} />
             </TouchableOpacity>
 
             <Text className="text-primary mx-3 font-medium">
@@ -62,7 +62,7 @@ export default function CartItem({
                 onUpdateQuantity && onUpdateQuantity(item.quantity + 1)
               }
             >
-              <Ionicons name="add" size={16} color={COLORS.primary} />
+              <Icon name="add" size={16} color={COLORS.primary} />
             </TouchableOpacity>
           </View>
         </View>

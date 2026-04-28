@@ -12,7 +12,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { Link, useRouter } from "expo-router";
 import { useSignIn, useClerk } from "@clerk/expo";
 import { COLORS } from "@/constants";
@@ -93,7 +93,7 @@ export default function SignInScreen() {
             onPress={() => router.push("/")}
             style={{ marginBottom: 32, alignSelf: "flex-start" }}
           >
-            <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
+            <Icon name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
 
           <View style={{ alignItems: "center", marginBottom: 36 }}>
@@ -134,7 +134,7 @@ export default function SignInScreen() {
                 onPress={() => setShowPassword((v) => !v)}
                 style={styles.eyeBtn}
               >
-                <Ionicons
+                <Icon
                   name={showPassword ? "eye-off-outline" : "eye-outline"}
                   size={20}
                   color={COLORS.secondary}

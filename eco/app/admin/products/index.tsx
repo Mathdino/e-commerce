@@ -10,7 +10,7 @@ import {
   Image,
   Alert,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 import { useAuth } from "@clerk/expo";
 import api from "@/constants/api";
@@ -114,7 +114,7 @@ export default function AdminProducts() {
           onPress={() => router.push("/admin/products/add")}
           className="bg-gray-800 px-4 py-2 rounded-full flex-row items-center"
         >
-          <Ionicons name="add" size={20} color="white" />
+          <Icon name="add" size={20} color="white" />
           <Text className="text-white font-medium ml-1">Adicionar</Text>
         </TouchableOpacity>
       </View>
@@ -174,13 +174,13 @@ export default function AdminProducts() {
                   }
                   className="p-2 bg-slate-50 rounded-full mr-2"
                 >
-                  <Ionicons name="create-outline" size={18} color="#333333" />
+                  <Icon name="create-outline" size={18} color="#333333" />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => deleteProduct(product._id)}
                   className="p-2 bg-gray-50 rounded-full"
                 >
-                  <Ionicons name="trash-outline" size={18} color="#333333" />
+                  <Icon name="trash-outline" size={18} color="#333333" />
                 </TouchableOpacity>
               </View>
             </View>

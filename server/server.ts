@@ -10,6 +10,7 @@ import CartRouter from "./routes/cartRoutes.js";
 import OrderRouter from "./routes/ordersRoute.js";
 import AddressRouter from "./routes/addressRoutes.js";
 import AdminRouter from "./routes/adminRoutes.js";
+import WishlistRouter from "./routes/wishlistRoutes.js";
 import { seedProducts } from "./scripts/seedProducts.js";
 
 const app = express();
@@ -43,6 +44,8 @@ app.use("/api/orders", OrderRouter);
 app.use("/api/addresses", AddressRouter);
 
 app.use("/api/admin", AdminRouter);
+
+app.use("/api/wishlist", WishlistRouter);
 
 await makeAdmin();
 

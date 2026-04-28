@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { CategoryItemProps } from "@/constants/types";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 
 export default function CategoryItem({
@@ -14,7 +14,7 @@ export default function CategoryItem({
       <View
         className={`w-14 h-14 items-center rounded-full justify-center mb-2 ${isSelected ? "bg-primary" : "bg-surface"}`}
       >
-        <Ionicons
+        <Icon
           name={item.icon as any}
           size={24}
           color={isSelected ? "#fff" : COLORS.primary}

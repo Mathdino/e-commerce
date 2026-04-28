@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Redirect, Tabs } from "expo-router";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@clerk/expo";
@@ -33,7 +33,7 @@ export default function TabLayout() {
         name="index"
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
+            <Icon
               name={focused ? "home" : "home-outline"}
               color={color}
               size={26}
@@ -47,15 +47,13 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View className="relative">
-              <Feather
-                name={focused ? "shopping-cart" : "shopping-cart"}
+              <Icon
+                name="cart-outline"
                 color={color}
                 size={26}
               />
               {cartItems?.length > 0 && (
-                <View className="absolute -top-2 -right-2 bg-accent size-3 rounded-full items-center justify-center">
-                  <Ionicons name="ellipse" color="white" size={6} />
-                </View>
+                <View className="absolute -top-2 -right-2 bg-accent size-3 rounded-full" />
               )}
             </View>
           ),
@@ -66,7 +64,7 @@ export default function TabLayout() {
         name="favorites"
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
+            <Icon
               name={focused ? "heart" : "heart-outline"}
               color={color}
               size={26}
@@ -79,7 +77,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
+            <Icon
               name={focused ? "person" : "person-outline"}
               color={color}
               size={26}

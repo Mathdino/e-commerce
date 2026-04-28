@@ -76,8 +76,8 @@ const orderSchema = new mongoose.Schema<IOrder>(
     orderStatus: {
       type: String,
       required: true,
-      enum: ["separado", "processando", "enviado", "entregue", "cancelado"],
-      default: "separado",
+      enum: ["processando", "separado", "enviado", "entregue", "cancelado"],
+      default: "processando",
     },
     subtotal: {
       type: Number,

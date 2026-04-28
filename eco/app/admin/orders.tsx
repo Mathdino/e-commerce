@@ -12,7 +12,7 @@ import {
   FlatList,
 } from "react-native";
 import { COLORS, getStatusColor } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { useAuth } from "@clerk/expo";
 import api from "@/constants/api";
 
@@ -28,8 +28,8 @@ export default function AdminOrders() {
   const [updating, setUpdating] = useState(false);
 
   const STATUSES = [
-    "separado",
     "processando",
+    "separado",
     "enviado",
     "entregue",
     "cancelado",
@@ -201,7 +201,7 @@ export default function AdminOrders() {
                   <Text className="text-xs font-bold mr-2 uppercase tracking-wide">
                     {order.orderStatus}
                   </Text>
-                  <Ionicons
+                  <Icon
                     name="pencil"
                     size={12}
                     color="black"
@@ -224,7 +224,7 @@ export default function AdminOrders() {
                   Update Order Status
                 </Text>
                 <TouchableOpacity onPress={() => setStatusModalVisible(false)}>
-                  <Ionicons name="close" size={24} color={COLORS.secondary} />
+                  <Icon name="close" size={24} color={COLORS.secondary} />
                 </TouchableOpacity>
               </View>
 
@@ -258,7 +258,7 @@ export default function AdminOrders() {
                         {item}
                       </Text>
                       {selectedOrder?.orderStatus === item && (
-                        <Ionicons
+                        <Icon
                           name="checkmark-circle"
                           size={20}
                           color={COLORS.primary}

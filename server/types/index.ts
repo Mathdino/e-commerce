@@ -51,8 +51,8 @@ export interface IOrder extends Document {
   paymentStatus: "pendente" | "pago" | "cancelado" | "bloqeuado";
   paymentIntentId?: string;
   orderStatus:
-    | "separado"
     | "processando"
+    | "separado"
     | "enviado"
     | "entregue"
     | "cancelado";
@@ -73,7 +73,14 @@ export interface IProduct extends Document {
   comparePrice?: number;
   images: string[];
   sizes: string[];
-  category: "Men" | "Women" | "Kids" | "Shoes" | "Bags" | "Other";
+  category:
+    | "Homem"
+    | "Mulher"
+    | "Infantil"
+    | "Chuteira"
+    | "Mochila"
+    | "Camisa"
+    | "Outros";
   stock: number;
   ratings: {
     average: number;

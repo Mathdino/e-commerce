@@ -12,7 +12,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { useRouter, Link } from "expo-router";
 import { useSignUp, useClerk } from "@clerk/expo";
 import { COLORS } from "@/constants";
@@ -235,7 +235,7 @@ export default function SignUpScreen() {
             onPress={() => router.push("/")}
             style={{ marginBottom: 32, alignSelf: "flex-start" }}
           >
-            <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
+            <Icon name="arrow-back" size={24} color={COLORS.primary} />
           </TouchableOpacity>
 
           {!pendenteVerification ? (
@@ -304,7 +304,7 @@ export default function SignUpScreen() {
                     onPress={() => setShowPassword((v) => !v)}
                     style={styles.eyeBtn}
                   >
-                    <Ionicons
+                    <Icon
                       name={showPassword ? "eye-off-outline" : "eye-outline"}
                       size={20}
                       color={COLORS.secondary}
@@ -342,7 +342,7 @@ export default function SignUpScreen() {
             <>
               <View style={{ alignItems: "center", marginBottom: 32 }}>
                 <View style={styles.iconCircle}>
-                  <Ionicons
+                  <Icon
                     name="mail-outline"
                     size={32}
                     color={COLORS.primary}

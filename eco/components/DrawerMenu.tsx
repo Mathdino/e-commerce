@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useRef } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS, CATEGORIES } from "@/constants";
 import { useRouter } from "expo-router";
 import { useAuth, useUser } from "@clerk/expo";
@@ -121,7 +121,7 @@ export default function DrawerMenu({ visible, onClose }: Props) {
                   />
                 ) : (
                   <View className="w-14 h-14 rounded-full bg-white/20 items-center justify-center">
-                    <Ionicons name="person" size={28} color="#fff" />
+                    <Icon name="person" size={28} color="#fff" />
                   </View>
                 )}
                 <View className="flex-1">
@@ -136,7 +136,7 @@ export default function DrawerMenu({ visible, onClose }: Props) {
             ) : (
               <View>
                 <View className="w-14 h-14 rounded-full bg-white/20 items-center justify-center mb-3">
-                  <Ionicons name="person-outline" size={28} color="#fff" />
+                  <Icon name="person-outline" size={28} color="#fff" />
                 </View>
                 <Text className="text-white font-bold text-lg mb-1">Bem-vindo!</Text>
                 <TouchableOpacity
@@ -145,7 +145,7 @@ export default function DrawerMenu({ visible, onClose }: Props) {
                 >
                   <View className="flex-row items-center gap-1.5 bg-white/20 rounded-full px-4 py-1.5">
                     <Text className="text-white font-medium text-sm">Fazer login</Text>
-                    <Ionicons name="arrow-forward" size={14} color="#fff" />
+                    <Icon name="arrow-forward" size={14} color="#fff" />
                   </View>
                 </TouchableOpacity>
               </View>
@@ -162,7 +162,7 @@ export default function DrawerMenu({ visible, onClose }: Props) {
                 className="flex-row items-center gap-4 py-3.5 px-2 rounded-xl mb-0.5"
               >
                 <View className="w-9 h-9 rounded-full bg-gray-100 items-center justify-center">
-                  <Ionicons name={item.icon as any} size={18} color={COLORS.primary} />
+                  <Icon name={item.icon as any} size={18} color={COLORS.primary} />
                 </View>
                 <Text className="text-primary font-medium text-base">{item.label}</Text>
               </TouchableOpacity>
@@ -184,7 +184,7 @@ export default function DrawerMenu({ visible, onClose }: Props) {
                 activeOpacity={0.7}
                 className="flex-row items-center gap-3 py-2.5"
               >
-                <Ionicons name={cat.icon as any} size={16} color={COLORS.secondary} />
+                <Icon name={cat.icon as any} size={16} color={COLORS.secondary} />
                 <Text className="text-secondary text-sm">{cat.name}</Text>
               </TouchableOpacity>
             ))}
@@ -200,7 +200,7 @@ export default function DrawerMenu({ visible, onClose }: Props) {
               activeOpacity={0.7}
               className="flex-row items-center gap-4 px-6 py-4 mb-6"
             >
-              <Ionicons name="log-out-outline" size={20} color={COLORS.error} />
+              <Icon name="log-out-outline" size={20} color={COLORS.error} />
               <Text style={{ color: COLORS.error }} className="font-medium text-base">
                 Sair
               </Text>

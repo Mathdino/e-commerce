@@ -111,8 +111,8 @@ export interface Order {
   paymentMethod: string;
   paymentStatus: "pendente" | "pago" | "cancelado" | "bloqeuado";
   orderStatus:
-    | "separado"
     | "processando"
+    | "separado"
     | "enviado"
     | "entregue"
     | "cancelado";

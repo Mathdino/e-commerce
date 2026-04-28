@@ -14,7 +14,7 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import Toast from "react-native-toast-message";
 import api from "@/constants/api";
 
@@ -120,14 +120,14 @@ export default function ProductDetails() {
               onPress={() => router.back()}
               className="w-10 h-10 bg-white rounded-full items-center justify-center p-1"
             >
-              <Ionicons name="arrow-back" size={24} color={COLORS.primary} />
+              <Icon name="arrow-back" size={24} color={COLORS.primary} />
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => toggleWishlist(product)}
               className="w-10 h-10 bg-white rounded-full items-center justify-center p-1"
             >
-              <Ionicons
+              <Icon
                 name={isLiked ? "heart" : "heart-outline"}
                 size={24}
                 color={isLiked ? COLORS.accent : COLORS.primary}
@@ -154,7 +154,7 @@ export default function ProductDetails() {
               {product.name}
             </Text>
             <View className="flex-row justify-between items-center mb-2">
-              <Ionicons name="star" size={14} color="#FFD700" />
+              <Icon name="star" size={14} color="#FFD700" />
               <Text className="text-sm font-bold ml-1">4.6</Text>
               <Text className="text-sm text-secondary ml-1">(85)</Text>
             </View>
@@ -214,7 +214,7 @@ export default function ProductDetails() {
           onPress={handleAddToCart}
           className="w-[80%] bg-primary py-4 rounded-full items-center shadow-lg flex-row justify-center m-auto"
         >
-          <Ionicons name="bag-outline" size={20} color="white" />
+          <Icon name="bag-outline" size={20} color="white" />
           <Text className="text-base font-bold text-white ml-2">
             Adicionar ao carrinho
           </Text>
@@ -224,7 +224,7 @@ export default function ProductDetails() {
           onPress={() => router.push("/(tabs)/cart")}
           className="w-[20%] py-3 flex-row justify-center relative"
         >
-          <Ionicons name="cart-outline" size={24} />
+          <Icon name="cart-outline" size={24} />
           <View className="absolute top-2 right-4 size-4 z-10 bg-black rounded-full justify-center items-center">
             <Text className="text-white text-[9px]">{itemCount}</Text>
           </View>

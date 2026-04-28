@@ -15,8 +15,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Toast from "react-native-toast-message";
-import { COLORS, CATEGORIES } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
+import { COLORS, CATEGORIES, getCategoryLabel } from "@/constants";
+import Icon from "@/components/Icon";
 import * as ImagePicker from "expo-image-picker";
 import { useAuth } from "@clerk/expo";
 import api from "@/constants/api";
@@ -53,9 +53,10 @@ export default function EditProduct() {
           setDescription(product.description || "");
           setPrice(product.price.toString());
           setStock(product.stock.toString());
+          // Armazena o valor do backend (ex: "Men") — exibição usa getCategoryLabel
           setCategory(
             typeof product.category === "object"
-              ? product.category.name
+              ? product.category.value ?? product.category.name
               : product.category,
           );
           setIsFeatured(product.isFeatured);
@@ -199,7 +200,7 @@ export default function EditProduct() {
     <ScrollView className="flex-1 bg-surface p-4">
       <View className="bg-white p-4 rounded-xl border border-gray-100 mb-20">
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Product Name *
+          Nome do Produto *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -208,7 +209,7 @@ export default function EditProduct() {
         />
 
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Price ($) *
+          Preço (R$) *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -218,7 +219,7 @@ export default function EditProduct() {
         />
 
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Stock Level
+          Quantidade em Estoque *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -228,7 +229,7 @@ export default function EditProduct() {
         />
 
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Sizes (comma separated)
+          Tamanhos (processandos por vírgula)
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -238,14 +239,16 @@ export default function EditProduct() {
         />
 
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Category
+          Categoria *
         </Text>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
           className="bg-surface p-3 rounded-lg mb-4 flex-row justify-between items-center"
         >
-          <Text className="text-primary">{category || "Select Category"}</Text>
-          <Ionicons name="chevron-down" size={20} color={COLORS.secondary} />
+          <Text className="text-primary">
+            {category ? getCategoryLabel(category) : "Selecione a categoria"}
+          </Text>
+          <Icon name="chevron-down" size={20} color={COLORS.secondary} />
         </TouchableOpacity>
 
         <Modal visible={modalVisible} animationType="slide" transparent>
@@ -253,27 +256,27 @@ export default function EditProduct() {
             <View className="flex-1 justify-end bg-black/50">
               <View className="bg-white rounded-t-2xl p-4 max-h-[50%]">
                 <Text className="text-lg font-bold text-center mb-4">
-                  Select Category
+                  Categoria *
                 </Text>
                 <FlatList
                   data={CATEGORIES}
                   keyExtractor={(item) => String(item.id)}
                   renderItem={({ item }) => (
                     <TouchableOpacity
-                      className={`p-4 border-b ${category === item.name ? "bg-primary/5" : ""}`}
+                      className={`p-4 border-b ${category === item.value ? "bg-primary/5" : ""}`}
                       onPress={() => {
-                        setCategory(item.name);
+                        setCategory(item.value);
                         setModalVisible(false);
                       }}
                     >
                       <View className="flex-row justify-between">
                         <Text
-                          className={`${category === item.name ? "font-bold text-primary" : ""}`}
+                          className={`${category === item.value ? "font-bold text-primary" : ""}`}
                         >
                           {item.name}
                         </Text>
-                        {category === item.name && (
-                          <Ionicons
+                        {category === item.value && (
+                          <Icon
                             name="checkmark"
                             size={20}
                             color={COLORS.primary}
@@ -289,7 +292,7 @@ export default function EditProduct() {
         </Modal>
 
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Images
+          Imagens *
         </Text>
         <View className="mb-4">
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -300,7 +303,7 @@ export default function EditProduct() {
                   onPress={() => removeExistingImage(index)}
                   className="absolute top-1 right-1 bg-black/50 rounded-full p-1"
                 >
-                  <Ionicons name="close" size={12} color="white" />
+                  <Icon name="close" size={12} color="white" />
                 </TouchableOpacity>
               </View>
             ))}
@@ -314,7 +317,7 @@ export default function EditProduct() {
                   onPress={() => removeNewImage(index)}
                   className="absolute top-1 right-1 bg-primary rounded-full p-1"
                 >
-                  <Ionicons name="close" size={12} color="white" />
+                  <Icon name="close" size={12} color="white" />
                 </TouchableOpacity>
               </View>
             ))}
@@ -323,7 +326,7 @@ export default function EditProduct() {
                 onPress={pickImages}
                 className="w-24 h-24 rounded-lg bg-gray-100 justify-center items-center border border-dashed border-gray-300"
               >
-                <Ionicons name="add" size={24} color={COLORS.secondary} />
+                <Icon name="add" size={24} color={COLORS.secondary} />
                 <Text className="text-xs text-secondary mt-1">Add</Text>
               </TouchableOpacity>
             )}
@@ -331,7 +334,7 @@ export default function EditProduct() {
         </View>
 
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Description
+          Descrição *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-6 text-primary h-24"
@@ -342,7 +345,7 @@ export default function EditProduct() {
         />
 
         <View className="flex-row justify-between items-center mb-6">
-          <Text className="text-primary font-bold">Featured Product</Text>
+          <Text className="text-primary font-bold">Produto Destacado *</Text>
           <Switch
             value={isFeatured}
             onValueChange={setIsFeatured}
@@ -359,7 +362,7 @@ export default function EditProduct() {
             <ActivityIndicator color="white" />
           ) : (
             <Text className="text-white font-medium text-lg">
-              Update Product
+              Atualizar Produto
             </Text>
           )}
         </TouchableOpacity>

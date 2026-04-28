@@ -13,7 +13,7 @@ import Toast from "react-native-toast-message";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/constants";
 import Header from "@/components/Header";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { useAuth } from "@clerk/expo";
 import api from "@/constants/api";
 
@@ -142,7 +142,7 @@ export default function Checkout() {
               </TouchableOpacity>
             </View>
             <View className="flex-row items-center py-3 gap-2">
-              <Ionicons
+              <Icon
                 name="location-outline"
                 size={20}
                 color={COLORS.secondary}
@@ -175,7 +175,7 @@ export default function Checkout() {
           onPress={() => setPaymentMethod("dinheiro")}
           className={`bg-white p-4 rounded-xl mb-4 shadow-sm flex-row items-center border-2 ${paymentMethod === "dinheiro" ? "border-primary" : "border-transparent"}`}
         >
-          <Ionicons
+          <Icon
             name="cash-outline"
             size={24}
             color={COLORS.secondary}
@@ -190,7 +190,7 @@ export default function Checkout() {
             </Text>
           </View>
           {paymentMethod === "dinheiro" && (
-            <Ionicons
+            <Icon
               name="checkmark-circle"
               size={24}
               color={COLORS.primary}
@@ -202,7 +202,7 @@ export default function Checkout() {
           onPress={() => setPaymentMethod("stripe")}
           className={`bg-white p-4 rounded-xl mb-4 shadow-sm flex-row items-center border-2 ${paymentMethod === "stripe" ? "border-primary" : "border-transparent"}`}
         >
-          <Ionicons
+          <Icon
             name="card-outline"
             size={24}
             color={COLORS.secondary}
@@ -217,7 +217,7 @@ export default function Checkout() {
             </Text>
           </View>
           {paymentMethod === "stripe" && (
-            <Ionicons
+            <Icon
               name="checkmark-circle"
               size={24}
               color={COLORS.primary}

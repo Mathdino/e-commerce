@@ -13,8 +13,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Toast from "react-native-toast-message";
-import { COLORS, CATEGORIES } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
+import { COLORS, CATEGORIES, getCategoryLabel } from "@/constants";
+import Icon from "@/components/Icon";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useAuth } from "@clerk/expo";
@@ -31,7 +31,7 @@ export default function AddProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("Men");
+  const [category, setCategory] = useState("");
   const [sizes, setSizes] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [isFeatured, setIsFeatured] = useState(false);
@@ -165,8 +165,10 @@ export default function AddProduct() {
           onPress={() => setModalVisible(true)}
           className="bg-surface p-3 rounded-lg mb-4 flex-row justify-between items-center"
         >
-          <Text className="text-primary">{category}</Text>
-          <Ionicons name="chevron-down" size={20} color={COLORS.secondary} />
+          <Text className="text-primary">
+            {category ? getCategoryLabel(category) : "Selecione a categoria"}
+          </Text>
+          <Icon name="chevron-down" size={20} color={COLORS.secondary} />
         </TouchableOpacity>
 
         {/* CATEGORY MODAL */}
@@ -184,25 +186,25 @@ export default function AddProduct() {
                   renderItem={({ item }) => (
                     <TouchableOpacity
                       className={`p-4 border-b ${
-                        category === item.name ? "bg-primary/5" : ""
+                        category === item.value ? "bg-primary/5" : ""
                       }`}
                       onPress={() => {
-                        setCategory(item.name);
+                        setCategory(item.value);
                         setModalVisible(false);
                       }}
                     >
                       <View className="flex-row justify-between">
                         <Text
                           className={`${
-                            category === item.name
+                            category === item.value
                               ? "font-bold text-primary"
                               : ""
                           }`}
                         >
                           {item.name}
                         </Text>
-                        {category === item.name && (
-                          <Ionicons
+                        {category === item.value && (
+                          <Icon
                             name="checkmark"
                             size={20}
                             color={COLORS.primary}
@@ -231,7 +233,7 @@ export default function AddProduct() {
 
         {/* SIZES */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Tamanhos (separados por vírgula)
+          Tamanhos (processandos por vírgula)
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -258,7 +260,7 @@ export default function AddProduct() {
             </ScrollView>
           ) : (
             <View className="w-full h-32 rounded-lg bg-gray-100 justify-center items-center border border-dashed border-gray-300">
-              <Ionicons
+              <Icon
                 name="cloud-upload-outline"
                 size={32}
                 color={COLORS.secondary}

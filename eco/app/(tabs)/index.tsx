@@ -20,7 +20,7 @@ import CategoryItem from "@/components/CategoryItem";
 import { Product } from "@/constants/types";
 import ProductCart from "@/components/ProductCart";
 import api from "@/constants/api";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 
 const { width } = Dimensions.get("window");
 
@@ -109,7 +109,7 @@ export default function Home() {
   };
 
   const categories = [
-    { id: "all", name: "Todos", icon: "grid" },
+    { id: "all", name: "Todos", icon: "grid-outline" },
     ...CATEGORIES,
   ];
 
@@ -135,15 +135,11 @@ export default function Home() {
                 onPress={() => setSearchText("")}
                 className="mr-2"
               >
-                <Ionicons
-                  name="close-circle"
-                  size={18}
-                  color={COLORS.secondary}
-                />
+                <Icon name="close-circle" size={18} color={COLORS.secondary} />
               </TouchableOpacity>
             )}
             <TouchableOpacity onPress={handleSearch} className="ml-1">
-              <Ionicons name="search" size={20} color={COLORS.primary} />
+              <Icon name="search" size={20} color={COLORS.primary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -366,7 +362,7 @@ export default function Home() {
                 {/* Estrelas */}
                 <View className="flex-row mb-3">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Ionicons
+                    <Icon
                       key={i}
                       name={i < item.avaliacao ? "star" : "star-outline"}
                       size={16}

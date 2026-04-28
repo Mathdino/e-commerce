@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { ProductCardProps } from "@/constants/types";
 import { Link } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 import { useWishlist } from "@/context/WishlistContext";
 
@@ -49,11 +49,10 @@ export default function ProductCart({ product }: ProductCardProps) {
               toggleWishlist(product);
             }}
           >
-            <Ionicons
+            <Icon
               name={isLiked ? "heart" : "heart-outline"}
               size={22}
               color={isLiked ? COLORS.accent : "#fff"}
-              style={{ textShadowColor: "rgba(0,0,0,0.4)", textShadowRadius: 4 }}
             />
           </TouchableOpacity>
 

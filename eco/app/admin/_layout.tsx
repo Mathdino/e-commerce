@@ -1,7 +1,7 @@
 import { Tabs, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, ActivityIndicator, TouchableOpacity, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { COLORS } from "@/constants";
 import { useUser } from "@clerk/expo";
 
@@ -52,7 +52,7 @@ export default function AdminLayout() {
             onPress={() => router.replace("/(tabs)")}
             className="mr-4 flex-row items-center"
           >
-            <Ionicons name="log-out-outline" size={24} color="red" />
+            <Icon name="log-out-outline" size={24} color="red" />
             <Text className="ml-1 text-red-500 font-medium">Sair</Text>
           </TouchableOpacity>
         ),
@@ -63,7 +63,7 @@ export default function AdminLayout() {
         options={{
           title: "Painel",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="grid-outline" size={size} color={color} />
+            <Icon name="grid-outline" size={size} color={color} />
           ),
         }}
       />
@@ -72,7 +72,7 @@ export default function AdminLayout() {
         options={{
           title: "Produtos",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="cube-outline" size={size} color={color} />
+            <Icon name="cube-outline" size={size} color={color} />
           ),
         }}
       />
@@ -81,7 +81,7 @@ export default function AdminLayout() {
         options={{
           title: "Pedidos",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="receipt-outline" size={size} color={color} />
+            <Icon name="receipt-outline" size={size} color={color} />
           ),
         }}
       />

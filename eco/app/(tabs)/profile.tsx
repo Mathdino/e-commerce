@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { COLORS, PROFILE_MENU } from "@/constants";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { useClerk } from "@clerk/expo";
 
 export default function Profile() {
@@ -34,7 +34,7 @@ export default function Profile() {
         {!user ? (
           <View className="items-center w-full">
             <View className="w-24 h-24 rounded-full bg-gray-200 items-center justify-center mb-6">
-              <Ionicons name="person" size={40} color={COLORS.secondary} />
+              <Icon name="person" size={40} color={COLORS.secondary} />
             </View>
             <Text className="text-primary font-bold text-xl mb-2">
               Usuário não logado
@@ -89,7 +89,7 @@ export default function Profile() {
                   onPress={() => router.push(item.route as any)}
                 >
                   <View className="w-10 h-10 bg-surface rounded-full items-center justify-center mr-4">
-                    <Ionicons
+                    <Icon
                       name={item.icon as any}
                       size={20}
                       color={COLORS.primary}
@@ -98,7 +98,7 @@ export default function Profile() {
                   <Text className="text-primary font-medium flex-1">
                     {item.title}
                   </Text>
-                  <Ionicons
+                  <Icon
                     name="chevron-forward"
                     size={20}
                     color={COLORS.secondary}

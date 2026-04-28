@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import React, { useEffect, useState } from "react";
 import {
   ScrollView,
@@ -201,7 +201,7 @@ export default function Addresses() {
               >
                 <View className="flex-row items-center justify-between mb-2">
                   <View className="flex-row items-center">
-                    <Ionicons
+                    <Icon
                       name={
                         item.type === "Casa"
                           ? "home-outline"
@@ -223,7 +223,7 @@ export default function Addresses() {
                   </View>
                   <View className="flex-row items-center gap-4">
                     <TouchableOpacity onPress={() => handleEditSearch(item)}>
-                      <Ionicons
+                      <Icon
                         name="pencil-outline"
                         size={20}
                         color={COLORS.secondary}
@@ -232,7 +232,7 @@ export default function Addresses() {
                     <TouchableOpacity
                       onPress={() => handleDeleteAddress(item._id)}
                     >
-                      <Ionicons
+                      <Icon
                         name="trash-outline"
                         size={20}
                         color={COLORS.error || "#ff4444"}
@@ -252,7 +252,7 @@ export default function Addresses() {
             className="flex-row items-center justify-center p-4 border border-dashed border-gray-300 rounded-xl mt-2 mb-8"
             onPress={openAddModal}
           >
-            <Ionicons name="add" size={24} color={COLORS.secondary} />
+            <Icon name="add" size={24} color={COLORS.secondary} />
             <Text className="text-secondary font-medium ml-2">
               Adicionar Endereço
             </Text>
@@ -274,7 +274,7 @@ export default function Addresses() {
                 {isEditing ? "Editar Endereço" : "Adicionar Endereço"}
               </Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Ionicons name="close" size={24} color={COLORS.primary} />
+                <Icon name="close" size={24} color={COLORS.primary} />
               </TouchableOpacity>
             </View>
 
@@ -355,7 +355,7 @@ export default function Addresses() {
                   className={`w-5 h-5 border rounded mr-2 items-center justify-center ${isDefault ? "bg-primary border-primary" : "border-gray-300"}`}
                 >
                   {isDefault && (
-                    <Ionicons name="checkmark" size={14} color="white" />
+                    <Icon name="checkmark" size={14} color="white" />
                   )}
                 </View>
                 <Text className="text-primary">Endereço Padrão</Text>

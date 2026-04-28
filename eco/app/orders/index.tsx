@@ -9,7 +9,7 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { COLORS, getStatusColor } from "@/constants";
@@ -140,7 +140,7 @@ export default function Orders() {
                         />
                       ) : (
                         <View className="w-12 h-12 bg-gray-200 rounded-md justify-center items-center">
-                          <Ionicons
+                          <Icon
                             name="image-outline"
                             size={20}
                             color={COLORS.secondary}
@@ -157,7 +157,7 @@ export default function Orders() {
                   Items: {item.items.length}
                 </Text>
                 <Text className="text-primary font-bold text-lg">
-                  ${item.totalAmount.toFixed(2)}
+                  R$ {item.totalAmount.toFixed(2).replace(".", ",")}
                 </Text>
               </View>
             </TouchableOpacity>

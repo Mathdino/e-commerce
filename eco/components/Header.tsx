@@ -4,7 +4,7 @@ import { HeaderProps } from "@/constants/types";
 import { COLORS } from "@/constants";
 import { useRouter } from "expo-router";
 import { useCart } from "@/context/CartContext";
-import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 import DrawerMenu from "@/components/DrawerMenu";
 
 const BAR_W = 22;
@@ -80,7 +80,7 @@ export default function Header({
           <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
             {showBack && (
               <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 12 }}>
-                <Ionicons name="arrow-back" color={COLORS.primary} size={24} />
+                <Icon name="arrow-back" color={COLORS.primary} size={24} />
               </TouchableOpacity>
             )}
 
@@ -111,13 +111,13 @@ export default function Header({
           <View>
             {showSearch && (
               <TouchableOpacity style={{ marginRight: 12 }}>
-                <Ionicons name="search-outline" color={COLORS.primary} size={24} />
+                <Icon name="search-outline" color={COLORS.primary} size={24} />
               </TouchableOpacity>
             )}
             {showCart && (
               <TouchableOpacity onPress={() => router.push("/(tabs)/cart")}>
                 <View style={{ position: "relative" }}>
-                  <Ionicons name="bag-outline" color={COLORS.primary} size={24} />
+                  <Icon name="bag-outline" color={COLORS.primary} size={24} />
                   <View style={{ position: "absolute", top: -4, right: -4, backgroundColor: COLORS.accent, width: 16, height: 16, borderRadius: 8, alignItems: "center", justifyContent: "center" }}>
                     <Text style={{ color: "#fff", fontSize: 10, fontWeight: "700" }}>{itemCount}</Text>
                   </View>
