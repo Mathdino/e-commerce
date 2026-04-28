@@ -176,10 +176,10 @@ export default function EditProduct() {
         router.replace("/admin/products");
       }
     } catch (error: any) {
-      console.error("Failed to update product:", error);
+      console.error("cancelado to update product:", error);
       Toast.show({
         type: "error",
-        text1: "Failed to Update Product",
+        text1: "cancelado to Update Product",
         text2: error.response?.data?.message || "Something went wrong",
       });
     } finally {

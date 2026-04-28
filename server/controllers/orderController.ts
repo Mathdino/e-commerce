@@ -91,8 +91,8 @@ export const createOrder = async (req: Request, res: Response) => {
       items: orderItems,
       shippingAddress,
       notes,
-      paymentMethod: req.body.paymentMethod || "cash",
-      paymentStatus: "pending",
+      paymentMethod: req.body.paymentMethod || "dinheiro",
+      paymentStatus: "pendente",
       paymentIntentId: req.body.paymentIntentId,
       orderNumber: "ORD-" + Date.now(),
       subtotal,
@@ -126,7 +126,7 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
 
     if (orderStatus) order.orderStatus = orderStatus;
     if (paymentStatus) order.paymentStatus = paymentStatus;
-    if (orderStatus === "delivered") order.deliveredAt = new Date();
+    if (orderStatus === "entregue") order.entregueAt = new Date();
 
     await order.save();
     res.json({ success: true, data: order });

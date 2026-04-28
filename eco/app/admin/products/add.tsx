@@ -53,7 +53,14 @@ export default function AddProduct() {
 
   // Add Product
   const handleSubmit = async () => {
-    if (!name || !description || !price || !category || sizes.length < 1 || images.length === 0) {
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      sizes.length < 1 ||
+      images.length === 0
+    ) {
       Toast.show({
         type: "error",
         text1: "Missing Fields",
@@ -103,7 +110,8 @@ export default function AddProduct() {
         body: formData,
       });
       const data = await response.json();
-      if (!data?.success) throw new Error(data?.message || "Falha ao adicionar produto");
+      if (!data?.success)
+        throw new Error(data?.message || "Falha ao adicionar produto");
 
       Toast.show({
         type: "success",
@@ -128,22 +136,22 @@ export default function AddProduct() {
       <View className="bg-white p-4 rounded-xl shadow-sm mb-20">
         {/* NAME */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Product Name *
+          Nome do Produto *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
-          placeholder="e.g. Wireless Headphones"
+          placeholder="Nome do Produto"
           value={name}
           onChangeText={setName}
         />
 
         {/* PRICE */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Price ($) *
+          Preço *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
-          placeholder="0.00"
+          placeholder="0,00"
           keyboardType="decimal-pad"
           value={price}
           onChangeText={setPrice}
@@ -151,7 +159,7 @@ export default function AddProduct() {
 
         {/* CATEGORY */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Category
+          Categoria
         </Text>
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
@@ -167,7 +175,7 @@ export default function AddProduct() {
             <View className="flex-1 justify-end bg-black/50">
               <View className="bg-white rounded-t-2xl p-4 max-h-[50%]">
                 <Text className="text-lg font-bold text-center mb-4">
-                  Select Category
+                  Categoria do Produto
                 </Text>
 
                 <FlatList
@@ -211,7 +219,7 @@ export default function AddProduct() {
 
         {/* STOCK */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Stock Level
+          Quantidade em Estoque *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -223,7 +231,7 @@ export default function AddProduct() {
 
         {/* SIZES */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Sizes (comma separated)
+          Tamanhos (separados por vírgula)
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-4 text-primary"
@@ -234,7 +242,7 @@ export default function AddProduct() {
 
         {/* IMAGE PICKER */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Product Images (max 5)
+          Imagens (máximo 5)
         </Text>
 
         <TouchableOpacity onPress={pickImages} className="mb-4">
@@ -256,7 +264,7 @@ export default function AddProduct() {
                 color={COLORS.secondary}
               />
               <Text className="text-secondary text-xs mt-2">
-                Tap to upload images
+                Clique para carregar imagens
               </Text>
             </View>
           )}
@@ -264,7 +272,7 @@ export default function AddProduct() {
 
         {/* DESCRIPTION */}
         <Text className="text-secondary text-xs font-bold mb-1 uppercase">
-          Description *
+          Descrição *
         </Text>
         <TextInput
           className="bg-surface p-3 rounded-lg mb-6 text-primary h-24"
@@ -275,7 +283,7 @@ export default function AddProduct() {
 
         {/* FEATURED */}
         <View className="flex-row justify-between items-center mb-6">
-          <Text className="text-primary font-bold">Featured Product</Text>
+          <Text className="text-primary font-bold">Produto Destacado? *</Text>
           <Switch
             value={isFeatured}
             onValueChange={setIsFeatured}
@@ -294,7 +302,7 @@ export default function AddProduct() {
           {submitting ? (
             <ActivityIndicator color="white" />
           ) : (
-            <Text className="text-white font-bold text-lg">Create Product</Text>
+            <Text className="text-white font-bold text-lg">Criar Produto</Text>
           )}
         </TouchableOpacity>
       </View>

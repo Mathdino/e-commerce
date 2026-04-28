@@ -61,14 +61,14 @@ const orderSchema = new mongoose.Schema<IOrder>(
     paymentMethod: {
       type: String,
       required: true,
-      enum: ["cash", "stripe"],
-      default: "cash",
+      enum: ["dinheiro", "stripe"],
+      default: "dinheiro",
     },
     paymentStatus: {
       type: String,
       required: true,
-      enum: ["pending", "paid", "failed", "refunded"],
-      default: "pending",
+      enum: ["pendente", "pago", "cancelado", "bloqeuado"],
+      default: "pendente",
     },
     paymentIntentId: {
       type: String,
@@ -76,8 +76,8 @@ const orderSchema = new mongoose.Schema<IOrder>(
     orderStatus: {
       type: String,
       required: true,
-      enum: ["placed", "processing", "shipped", "delivered", "cancelled"],
-      default: "placed",
+      enum: ["separado", "processando", "enviado", "entregue", "cancelado"],
+      default: "separado",
     },
     subtotal: {
       type: Number,
@@ -96,7 +96,7 @@ const orderSchema = new mongoose.Schema<IOrder>(
       required: true,
     },
     notes: String,
-    deliveredAt: Date,
+    entregueAt: Date,
   },
   {
     timestamps: true,

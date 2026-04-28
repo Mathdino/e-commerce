@@ -181,7 +181,7 @@ export default function Addresses() {
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
-      <Header title="Shipping Addresses" showBack />
+      <Header title="Endereços" showBack />
 
       {loading ? (
         <View className="flex-1 justify-center items-center">
@@ -191,7 +191,7 @@ export default function Addresses() {
         <ScrollView className="flex-1 px-4 pt-4">
           {addresses.length === 0 ? (
             <Text className="text-center text-secondary mt-10">
-              No addresses found
+              Nenhum endereço encontrado
             </Text>
           ) : (
             addresses.map((item) => (
@@ -203,7 +203,7 @@ export default function Addresses() {
                   <View className="flex-row items-center">
                     <Ionicons
                       name={
-                        item.type === "Home"
+                        item.type === "Casa"
                           ? "home-outline"
                           : "briefcase-outline"
                       }
@@ -254,7 +254,7 @@ export default function Addresses() {
           >
             <Ionicons name="add" size={24} color={COLORS.secondary} />
             <Text className="text-secondary font-medium ml-2">
-              Add New Address
+              Adicionar Endereço
             </Text>
           </TouchableOpacity>
         </ScrollView>
@@ -271,7 +271,7 @@ export default function Addresses() {
           <View className="bg-white rounded-t-3xl p-6 h-[85%]">
             <View className="flex-row justify-between items-center mb-6">
               <Text className="text-xl font-bold text-primary">
-                {isEditing ? "Edit Address" : "Add New Address"}
+                {isEditing ? "Editar Endereço" : "Adicionar Endereço"}
               </Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
                 <Ionicons name="close" size={24} color={COLORS.primary} />
@@ -279,9 +279,9 @@ export default function Addresses() {
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Text className="text-primary font-medium mb-2">Label</Text>
+              <Text className="text-primary font-medium mb-2">Tipo</Text>
               <View className="flex-row gap-3 mb-4">
-                {["Home", "Work", "Other"].map((t) => (
+                {["Casa", "Trabalho", "Outro"].map((t) => (
                   <TouchableOpacity
                     key={t}
                     onPress={() => setType(t)}
@@ -296,31 +296,29 @@ export default function Addresses() {
                 ))}
               </View>
 
-              <Text className="text-primary font-medium mb-2">
-                Street Address
-              </Text>
+              <Text className="text-primary font-medium mb-2">Endereço</Text>
               <TextInput
                 className="bg-surface p-4 rounded-xl text-primary mb-4"
-                placeholder="123 Main St"
+                placeholder="Rua Teste, 123"
                 value={street}
                 onChangeText={setStreet}
               />
 
               <View className="flex-row gap-4 mb-4">
                 <View className="flex-1">
-                  <Text className="text-primary font-medium mb-2">City</Text>
+                  <Text className="text-primary font-medium mb-2">Cidade</Text>
                   <TextInput
                     className="bg-surface p-4 rounded-xl text-primary"
-                    placeholder="New York"
+                    placeholder="São Paulo"
                     value={city}
                     onChangeText={setCity}
                   />
                 </View>
                 <View className="flex-1">
-                  <Text className="text-primary font-medium mb-2">State</Text>
+                  <Text className="text-primary font-medium mb-2">Estado</Text>
                   <TextInput
                     className="bg-surface p-4 rounded-xl text-primary"
-                    placeholder="NY"
+                    placeholder="SP"
                     value={state}
                     onChangeText={setState}
                   />
@@ -329,22 +327,20 @@ export default function Addresses() {
 
               <View className="flex-row gap-4 mb-4">
                 <View className="flex-1">
-                  <Text className="text-primary font-medium mb-2">
-                    Zip Code
-                  </Text>
+                  <Text className="text-primary font-medium mb-2">CEP</Text>
                   <TextInput
                     className="bg-surface p-4 rounded-xl text-primary"
-                    placeholder="10001"
+                    placeholder="00000-000"
                     value={zipCode}
                     onChangeText={setZipCode}
                     keyboardType="numeric"
                   />
                 </View>
                 <View className="flex-1">
-                  <Text className="text-primary font-medium mb-2">Country</Text>
+                  <Text className="text-primary font-medium mb-2">País</Text>
                   <TextInput
                     className="bg-surface p-4 rounded-xl text-primary"
-                    placeholder="USA"
+                    placeholder="Brasil"
                     value={country}
                     onChangeText={setCountry}
                   />
@@ -362,7 +358,7 @@ export default function Addresses() {
                     <Ionicons name="checkmark" size={14} color="white" />
                   )}
                 </View>
-                <Text className="text-primary">Set as default address</Text>
+                <Text className="text-primary">Endereço Padrão</Text>
               </TouchableOpacity>
 
               <TouchableOpacity

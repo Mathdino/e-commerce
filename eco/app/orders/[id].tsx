@@ -52,7 +52,7 @@ export default function OrderDetails() {
   if (!order) {
     return (
       <SafeAreaView className="flex-1 bg-surface justify-center items-center">
-        <Text>Order not found</Text>
+        <Text className="text-secondary text-lg">Pedido não encontrado</Text>
       </SafeAreaView>
     );
   }
@@ -68,38 +68,38 @@ export default function OrderDetails() {
 
   const ORDER_STEPS = [
     {
-      title: "Order Placed",
+      title: "Pedido Criado",
       date: formatDate(order.createdAt),
       completed: true,
     },
     {
-      title: "Processing",
+      title: "Em Processo",
       date: "",
-      completed: ["processing", "shipped", "delivered"].includes(
+      completed: ["processando", "enviado", "entregue"].includes(
         order.orderStatus,
       ),
     },
     {
-      title: "Shipped",
+      title: "Saiu para Entrega",
       date: "",
-      completed: ["shipped", "delivered"].includes(order.orderStatus),
+      completed: ["enviado", "entregue"].includes(order.orderStatus),
     },
     {
-      title: "Delivered",
+      title: "Entregue",
       date: "",
-      completed: order.orderStatus === "delivered",
+      completed: order.orderStatus === "entregue",
     },
   ];
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
-      <Header title={`Order #${order.orderNumber}`} showBack />
+      <Header title={`Pedido #${order.orderNumber}`} showBack />
 
       <ScrollView className="flex-1 px-4 pt-4">
         {/* Order Status */}
         <View className="bg-white p-4 rounded-xl mb-4 border border-gray-100">
           <Text className="text-lg font-bold text-primary mb-4">
-            Order Status
+            Status do Pedido
           </Text>
 
           {ORDER_STEPS.map((step, index) => (
@@ -130,7 +130,7 @@ export default function OrderDetails() {
 
         {/* Items */}
         <View className="bg-white p-4 rounded-xl mb-4 border border-gray-100">
-          <Text className="text-lg font-bold text-primary mb-4">Products</Text>
+          <Text className="text-lg font-bold text-primary mb-4">Produto</Text>
           {order.items.map((item: any, index: number) => {
             const productData = item.product as Product;
             const image = productData?.images?.[0];
@@ -152,14 +152,14 @@ export default function OrderDetails() {
                     {item.name}
                   </Text>
                   <Text className="text-secondary text-xs">
-                    Size: {item.size}
+                    Tamanho: {item.size}
                   </Text>
                   <View className="flex-row justify-between items-center mt-2">
                     <Text className="text-primary font-bold">
-                      ${item.price}
+                      R${item.price.toFixed(2).replace(".", ",")}
                     </Text>
                     <Text className="text-secondary text-xs">
-                      Qty: {item.quantity}
+                      Quant.: {item.quantity}
                     </Text>
                   </View>
                 </View>
@@ -171,7 +171,7 @@ export default function OrderDetails() {
         {/* Shipping Details */}
         <View className="bg-white p-4 rounded-xl mb-4 border border-gray-100">
           <Text className="text-lg font-bold text-primary mb-2">
-            Shipping Details
+            Detalhes de Entrega
           </Text>
           <View className="flex-row items-center mb-2">
             <Ionicons
@@ -189,18 +189,18 @@ export default function OrderDetails() {
         {/* Payment Summary */}
         <View className="bg-white p-4 rounded-xl mb-8 border border-gray-100">
           <Text className="text-lg font-bold text-primary mb-4">
-            Payment Summary
+            Pagamento do Pedido
           </Text>
           <View className="flex-row justify-between mb-2">
-            <Text className="text-secondary">Payment Method</Text>
+            <Text className="text-secondary">Método de Pagamento</Text>
             <Text className="text-primary font-medium capitalize">
               {order.paymentMethod}
             </Text>
           </View>
           <View className="flex-row justify-between mb-2">
-            <Text className="text-secondary">Payment Status</Text>
+            <Text className="text-secondary">Status do Pagamento</Text>
             <Text
-              className={`font-medium capitalize ${order.paymentStatus === "paid" ? "text-green-600" : order.paymentStatus === "failed" ? "text-red-600" : "text-orange-500"}`}
+              className={`font-medium capitalize ${order.paymentStatus === "pago" ? "text-green-600" : order.paymentStatus === "cancelado" ? "text-red-600" : "text-orange-500"}`}
             >
               {order.paymentStatus}
             </Text>
@@ -209,26 +209,26 @@ export default function OrderDetails() {
           <View className="flex-row justify-between mb-2">
             <Text className="text-secondary">Subtotal</Text>
             <Text className="text-primary font-medium">
-              ${order.subtotal.toFixed(2)}
+              R${order.subtotal.toFixed(2).replace(".", ",")}
             </Text>
           </View>
           <View className="flex-row justify-between mb-2">
-            <Text className="text-secondary">Shipping</Text>
+            <Text className="text-secondary">Entrega</Text>
             <Text className="text-primary font-medium">
-              ${order.shippingCost.toFixed(2)}
+              R${order.shippingCost.toFixed(2).replace(".", ",")}
             </Text>
           </View>
           <View className="flex-row justify-between mb-2">
-            <Text className="text-secondary">Tax</Text>
+            <Text className="text-secondary">Taxa</Text>
             <Text className="text-primary font-medium">
-              ${order.tax.toFixed(2)}
+              R${order.tax.toFixed(2).replace(".", ",")}
             </Text>
           </View>
           <View className="h-px bg-gray-100 my-2" />
           <View className="flex-row justify-between">
             <Text className="text-primary font-bold text-lg">Total</Text>
             <Text className="text-primary font-bold text-lg">
-              ${order.totalAmount.toFixed(2)}
+              R${order.totalAmount.toFixed(2).replace(".", ",")}
             </Text>
           </View>
         </View>

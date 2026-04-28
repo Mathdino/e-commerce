@@ -27,7 +27,9 @@ export default function Checkout() {
   const [pageLoading, setPageLoading] = useState(true);
 
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<"cash" | "stripe">("cash");
+  const [paymentMethod, setPaymentMethod] = useState<"dinheiro" | "stripe">(
+    "dinheiro",
+  );
 
   const shipping = 2.0;
   const tax = 0;
@@ -80,7 +82,7 @@ export default function Checkout() {
       const payload = {
         shippingAddress: selectedAddress,
         notes: "Nenhuma observação",
-        paymentMethod: "cash",
+        paymentMethod: "dinheiro",
       };
 
       const token = await getToken();
@@ -170,8 +172,8 @@ export default function Checkout() {
         </Text>
 
         <TouchableOpacity
-          onPress={() => setPaymentMethod("cash")}
-          className={`bg-white p-4 rounded-xl mb-4 shadow-sm flex-row items-center border-2 ${paymentMethod === "cash" ? "border-primary" : "border-transparent"}`}
+          onPress={() => setPaymentMethod("dinheiro")}
+          className={`bg-white p-4 rounded-xl mb-4 shadow-sm flex-row items-center border-2 ${paymentMethod === "dinheiro" ? "border-primary" : "border-transparent"}`}
         >
           <Ionicons
             name="cash-outline"
@@ -187,7 +189,7 @@ export default function Checkout() {
               Pague ao receber o pedido.
             </Text>
           </View>
-          {paymentMethod === "cash" && (
+          {paymentMethod === "dinheiro" && (
             <Ionicons
               name="checkmark-circle"
               size={24}

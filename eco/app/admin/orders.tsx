@@ -28,11 +28,11 @@ export default function AdminOrders() {
   const [updating, setUpdating] = useState(false);
 
   const STATUSES = [
-    "placed",
-    "processing",
-    "shipped",
-    "delivered",
-    "cancelled",
+    "separado",
+    "processando",
+    "enviado",
+    "entregue",
+    "cancelado",
   ];
 
   const fetchOrders = async () => {
@@ -126,7 +126,7 @@ export default function AdminOrders() {
             >
               <View className="flex-row justify-between mb-2">
                 <Text className="font-medium text-sm text-gray-400 ">
-                  Order ID : #{order._id}
+                  ID do Pedido : #{order._id}
                 </Text>
                 <Text className="text-secondary text-xs">
                   {new Date(order.createdAt).toLocaleDateString()}
@@ -135,13 +135,13 @@ export default function AdminOrders() {
 
               <View className="mb-3 bg-gray-50 p-3 rounded-lg">
                 <Text className="text-xs text-secondary font-bold mb-1">
-                  CUSTOMER
+                  CLIENTE
                 </Text>
                 <Text className="text-primary font-medium">
-                  {order.user?.name || "Unknown User"}
+                  {order.user?.name || "Cliente desconhecido"}
                 </Text>
                 <Text className="text-secondary text-xs">
-                  {order.user?.email || "No email"}
+                  {order.user?.email || "Email não informado"}
                 </Text>
                 {!order.user && (
                   <Text className="text-xs text-gray-400 mt-1">
@@ -151,8 +151,8 @@ export default function AdminOrders() {
               </View>
 
               <View className="mb-3 bg-gray-50 p-3 rounded-lg">
-                <Text className="text-xs text-secondary font-bold mb-1">
-                  SHIPPING ADDRESS
+                <Text className="text-xs text-secondary font-bold mb-1 uppercase">
+                  Endereço de Entrega
                 </Text>
                 <Text className="text-primary text-xs">
                   {order.shippingAddress?.street}, {order.shippingAddress?.city}
@@ -166,7 +166,7 @@ export default function AdminOrders() {
 
               <View className="mb-3">
                 <Text className="text-xs text-secondary font-bold mb-2">
-                  ITEMS
+                  ITENS
                 </Text>
                 {order.items.map((item: any) => (
                   <View
@@ -183,7 +183,7 @@ export default function AdminOrders() {
                       )}
                     </Text>
                     <Text className="text-secondary text-xs font-bold">
-                      ${item.price.toFixed(2)}
+                      R$ {item.price.toFixed(2).replace(".", ",")}
                     </Text>
                   </View>
                 ))}
@@ -191,7 +191,7 @@ export default function AdminOrders() {
 
               <View className="flex-row justify-between items-center mt-2 pt-3 border-t border-gray-100">
                 <Text className="text-primary font-bold text-lg">
-                  ${order.totalAmount.toFixed(2)}
+                  R$ {order.totalAmount.toFixed(2).replace(".", ",")}
                 </Text>
 
                 <TouchableOpacity

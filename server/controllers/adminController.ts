@@ -11,7 +11,7 @@ export const getDashboardStatus = async (req: Request, res: Response) => {
     const totalOrders = await Order.countDocuments();
 
     const validOrders = await Order.find({
-      orderStatus: { $ne: "cancelled" },
+      orderStatus: { $ne: "cancelado" },
     });
 
     const totalRevenue = validOrders.reduce(

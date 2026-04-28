@@ -69,26 +69,29 @@ export default function AdminDashboard() {
     >
       <View className="mb-8">
         <Text className="text-primary font-bold text-2xl mb-4 tracking-tight">
-          Overview
+          Resumo
         </Text>
         <View className="flex-row flex-wrap justify-between">
           <StatCard
-            label="Total Revenue"
-            value={`$${stats.totalRevenue.toFixed(2)}`}
+            label="Total Vendas"
+            value={`R$ ${stats.totalRevenue.toFixed(2).replace(".", ",")}`}
           />
-          <StatCard label="Total Orders" value={stats.totalOrders.toString()} />
-          <StatCard label="Products" value={stats.totalProducts.toString()} />
-          <StatCard label="Users" value={stats.totalUsers.toString()} />
+          <StatCard
+            label="Total Pedidos"
+            value={stats.totalOrders.toString()}
+          />
+          <StatCard label="Produtos" value={stats.totalProducts.toString()} />
+          <StatCard label="Usuários" value={stats.totalUsers.toString()} />
         </View>
       </View>
 
       <View className="mb-6">
         <Text className="text-primary font-bold text-2xl mb-4 tracking-tight">
-          Recent Orders
+          Pedidos Recentes
         </Text>
         {stats.recentOrders.length === 0 ? (
           <View className="bg-white p-6 rounded-2xl border border-gray-100 items-center">
-            <Text className="text-secondary">No recent orders</Text>
+            <Text className="text-secondary">Sem pedidos recentes</Text>
           </View>
         ) : (
           stats.recentOrders.map((order: any) => (
@@ -99,7 +102,7 @@ export default function AdminDashboard() {
               <View className="flex-row justify-between items-center mb-3">
                 <View>
                   <Text className="font-bold text-primary text-base">
-                    Total Products :{" "}
+                    Produtos Comprados :{" "}
                     {order.items.reduce(
                       (acc: number, item: any) => acc + item.quantity,
                       0,
@@ -120,7 +123,7 @@ export default function AdminDashboard() {
               <View className="pb-2">
                 {order.items.map((item: any) => (
                   <Text key={item._id} className="text-secondary text-xs mt-1">
-                    {item.name} x {item.quantity}
+                    {item.quantity} x {item.name}
                   </Text>
                 ))}
               </View>
@@ -139,7 +142,7 @@ export default function AdminDashboard() {
                   </Text>
                 </View>
                 <Text className="text-primary font-bold text-lg">
-                  ${order.totalAmount.toFixed(2)}
+                  R$ {order.totalAmount.toFixed(2).replace(".", ",")}
                 </Text>
               </View>
             </View>

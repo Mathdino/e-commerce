@@ -108,14 +108,14 @@ export default function AdminProducts() {
     <View className="flex-1 bg-surface">
       <View className="p-4 bg-white border border-gray-100 flex-row justify-between items-center">
         <Text className="text-lg font-semibold text-primary">
-          Total Products ({products.length})
+          Total Produtos ({products.length})
         </Text>
         <TouchableOpacity
           onPress={() => router.push("/admin/products/add")}
           className="bg-gray-800 px-4 py-2 rounded-full flex-row items-center"
         >
           <Ionicons name="add" size={20} color="white" />
-          <Text className="text-white font-medium ml-1">Add Product</Text>
+          <Text className="text-white font-medium ml-1">Adicionar</Text>
         </TouchableOpacity>
       </View>
 
@@ -127,7 +127,7 @@ export default function AdminProducts() {
       >
         {products.length === 0 ? (
           <View className="flex-1 justify-center items-center mt-20">
-            <Text className="text-secondary">No products found</Text>
+            <Text className="text-secondary">Nenhum produto encontrado</Text>
           </View>
         ) : (
           products.map((product: any) => (
@@ -154,16 +154,16 @@ export default function AdminProducts() {
                   {product.name}
                 </Text>
                 <Text className="text-secondary text-xs mb-1" numberOfLines={1}>
-                  Category : {product.category || "Others"}
+                  Categoria : {product.category || "Outros"}
                 </Text>
                 <Text className="text-secondary text-xs mb-1" numberOfLines={1}>
-                  Stock : {product.stock}
+                  Estoque : {product.stock}
                 </Text>
                 <Text className="text-secondary text-xs mb-1" numberOfLines={1}>
-                  Sizes : {product.sizes.join(", ")}
+                  Tamanhos : {product.sizes.join(", ")}
                 </Text>
                 <Text className="text-primary font-bold">
-                  ${product.price.toFixed(2)}
+                  R$ {product.price.toFixed(2).replace(".", ",")}
                 </Text>
               </View>
 

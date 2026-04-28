@@ -18,28 +18,28 @@ export const CATEGORIES = [
 ];
 
 export const PROFILE_MENU = [
-  { id: 1, title: "My Orders", icon: "receipt-outline", route: "/orders" },
+  { id: 1, title: "Meus Pedidos", icon: "receipt-outline", route: "/orders" },
   {
     id: 2,
-    title: "Shipping Addresses",
+    title: "Endereços",
     icon: "location-outline",
     route: "/addresses",
   },
-  { id: 4, title: "My Reviews", icon: "star-outline", route: "/" },
-  { id: 5, title: "Settings", icon: "settings-outline", route: "/" },
+  { id: 4, title: "Minhas Avaliações", icon: "star-outline", route: "/" },
+  { id: 5, title: "Configurações", icon: "settings-outline", route: "/" },
 ];
 
 export const getStatusColor = (status: string) => {
   switch (status) {
-    case "placed":
+    case "separado":
       return "bg-yellow-50 text-yellow-900";
-    case "processing":
+    case "processando":
       return "bg-indigo-50 text-indigo-900";
-    case "shipped":
+    case "enviado":
       return "bg-purple-50 text-purple-900";
-    case "delivered":
+    case "entregue":
       return "bg-green-50 text-green-900";
-    case "cancelled":
+    case "cancelado":
       return "bg-red-50 text-red-900";
     default:
       return "bg-gray-50 text-gray-900";

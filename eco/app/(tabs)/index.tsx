@@ -353,7 +353,6 @@ export default function Home() {
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             scrollEnabled={true}
-            onScrollToIndexFailed={() => {}}
             getItemLayout={(_, index) => ({
               length: width - 32,
               offset: (width - 32) * index,
@@ -412,8 +411,35 @@ export default function Home() {
           <Text className="text-secondary text-center mb-4">
             Siga nosso Instagram e ganhe 10% de desconto na sua primeira compra.
           </Text>
-          <TouchableOpacity className="bg-primary w-4/5 py-3 rounded-full items-center">
-            <Text className="text-white font-medium text-base">Siga Agora</Text>
+          <TouchableOpacity className="bg-white w-4/5 py-3 rounded-full items-center">
+            {/* Botão branco pill — F | Confira */}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                borderRadius: 50,
+                paddingVertical: 6,
+                paddingHorizontal: 14,
+                gap: 6,
+              }}
+            >
+              <Image
+                source={F_BUTTON}
+                style={{ width: 18, height: 18 }}
+                resizeMode="contain"
+              />
+              <Text
+                style={{
+                  color: "#111",
+                  fontSize: 12,
+                  fontWeight: "500",
+                  letterSpacing: 0.3,
+                }}
+              >
+                | Siga Agora
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </ScrollView>

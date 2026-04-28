@@ -47,16 +47,21 @@ export interface IOrder extends Document {
     zipCode: string;
     country: string;
   };
-  paymentMethod: "cash" | "stripe";
-  paymentStatus: "pending" | "paid" | "failed" | "refunded";
+  paymentMethod: "dinheiro" | "stripe";
+  paymentStatus: "pendente" | "pago" | "cancelado" | "bloqeuado";
   paymentIntentId?: string;
-  orderStatus: "placed" | "processing" | "shipped" | "delivered" | "cancelled";
+  orderStatus:
+    | "separado"
+    | "processando"
+    | "enviado"
+    | "entregue"
+    | "cancelado";
   subtotal: number;
   shippingCost: number;
   tax: number;
   totalAmount: number;
   notes?: string;
-  deliveredAt?: Date;
+  entregueAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

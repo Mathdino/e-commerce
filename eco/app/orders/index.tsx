@@ -52,7 +52,7 @@ export default function Orders() {
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
-      <Header title="My Orders" showBack />
+      <Header title="Meus Pedidos" showBack />
 
       {loading ? (
         <View className="flex-1 justify-center items-center">
@@ -74,7 +74,7 @@ export default function Orders() {
             >
               <View className="flex-row justify-between mb-2">
                 <Text className="text-primary font-bold">
-                  Order #{item.orderNumber}
+                  Pedido #{item.orderNumber}
                 </Text>
                 <Text className="text-secondary text-sm">
                   {formatDate(item.createdAt)}
@@ -93,14 +93,14 @@ export default function Orders() {
 
                 <View
                   className={`px-2 py-1 rounded-full ${
-                    item.paymentStatus === "paid"
+                    item.paymentStatus === "pago"
                       ? "bg-green-100"
                       : "bg-gray-100"
                   }`}
                 >
                   <Text
                     className={`text-xs font-bold capitalize ${
-                      item.paymentStatus === "paid"
+                      item.paymentStatus === "pago"
                         ? "text-green-700"
                         : "text-gray-700"
                     }`}
@@ -112,7 +112,7 @@ export default function Orders() {
 
               <View className="flex-row justify-between items-center mb-2">
                 <Text className="text-secondary text-xs">
-                  Payment Method:{" "}
+                  Forma de Pagamento:{" "}
                   <Text className="text-primary font-medium capitalize">
                     {item.paymentMethod}
                   </Text>

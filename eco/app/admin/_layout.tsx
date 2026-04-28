@@ -52,8 +52,8 @@ export default function AdminLayout() {
             onPress={() => router.replace("/(tabs)")}
             className="mr-4 flex-row items-center"
           >
-            <Ionicons name="log-out-outline" size={24} color={COLORS.primary} />
-            <Text className="ml-1 text-primary font-medium">Exit</Text>
+            <Ionicons name="log-out-outline" size={24} color="red" />
+            <Text className="ml-1 text-red-500 font-medium">Sair</Text>
           </TouchableOpacity>
         ),
       }}
@@ -61,7 +61,7 @@ export default function AdminLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Dashboard",
+          title: "Painel",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="grid-outline" size={size} color={color} />
           ),
@@ -70,7 +70,7 @@ export default function AdminLayout() {
       <Tabs.Screen
         name="products"
         options={{
-          title: "Products",
+          title: "Produtos",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="cube-outline" size={size} color={color} />
           ),
@@ -79,7 +79,7 @@ export default function AdminLayout() {
       <Tabs.Screen
         name="orders"
         options={{
-          title: "Orders",
+          title: "Pedidos",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="receipt-outline" size={size} color={color} />
           ),

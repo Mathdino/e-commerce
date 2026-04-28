@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "expo-router";
@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "@/components/Header";
 import { ScrollView } from "react-native-gesture-handler";
 import CartItem from "@/components/CartItem";
+import { F_BUTTON } from "@/assets/assets";
 
 export default function Cart() {
   const { cartItems, cartTotal, removeFromCart, updateQuantity } = useCart();
@@ -80,8 +81,35 @@ export default function Cart() {
             Você não tem nenhum item no carrinho.
           </Text>
           <TouchableOpacity onPress={() => router.push("/")} className="mt-4">
-            <View className="bg-primary text-white px-4 py-2 rounded-md">
-              <Text className="text-white font-bold">Ir para a loja</Text>
+            <View className="bg-white text-white px-4 py-2 rounded-full">
+              {/* Botão branco pill — F | Confira */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  borderRadius: 50,
+                  paddingVertical: 6,
+                  paddingHorizontal: 14,
+                  gap: 6,
+                }}
+              >
+                <Image
+                  source={F_BUTTON}
+                  style={{ width: 18, height: 18 }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    color: "#111",
+                    fontSize: 12,
+                    fontWeight: "500",
+                    letterSpacing: 0.3,
+                  }}
+                >
+                  | Ir para a loja
+                </Text>
+              </View>
             </View>
           </TouchableOpacity>
         </View>
