@@ -46,6 +46,7 @@ import {
   XCircle,
   Shirt,
   Rose,
+  SportShoe,
 } from "lucide-react-native";
 
 type IconName =
@@ -133,7 +134,7 @@ const ICON_MAP: Record<string, React.ComponentType<any>> = {
   "eye-off-outline": EyeOff,
   "eye-outline": Eye,
   filter: Filter,
-  "footsteps-outline": Footprints,
+  "footsteps-outline": SportShoe,
   "grid-outline": LayoutGrid,
   "happy-outline": Smile,
   heart: Heart,
