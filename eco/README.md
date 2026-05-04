@@ -1,51 +1,77 @@
-# Welcome to your Expo app 👋
+# Eco App 📱 - E-commerce Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Bem-vindo ao **Eco**, o aplicativo mobile do nosso ecossistema de e-commerce. Desenvolvido com **Expo** e **React Native**, o app oferece uma experiência de compra fluida, moderna e segura.
 
-## Get started
+## 🚀 Tecnologias Utilizadas
 
-1. Install dependencies
+O projeto utiliza as tecnologias mais modernas do ecossistema React Native:
 
+- **[Expo](https://expo.dev/)** - Framework para desenvolvimento React Native.
+- **[Expo Router](https://docs.expo.dev/router/introduction/)** - Roteamento baseado em arquivos.
+- **[NativeWind](https://www.nativewind.dev/)** - Estilização com Tailwind CSS para React Native.
+- **[Clerk](https://clerk.com/)** - Gerenciamento de autenticação completo e seguro.
+- **[Lucide React Native](https://lucide.dev/)** - Biblioteca de ícones elegantes.
+- **[Axios](https://axios-http.com/)** - Cliente HTTP para consumo de API.
+- **[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)** - Animações de alta performance.
+
+## ✨ Funcionalidades
+
+### 👤 Cliente
+- **Autenticação:** Cadastro e login seguros via Clerk.
+- **Catálogo de Produtos:** Navegação por categorias e busca de produtos.
+- **Favoritos:** Salve seus produtos desejados em uma lista personalizada.
+- **Carrinho:** Gerenciamento completo de itens para compra.
+- **Endereços:** Cadastro e gestão de múltiplos endereços de entrega.
+- **Pedidos:** Histórico detalhado e acompanhamento de pedidos realizados.
+
+### 🛡️ Admin
+- **Dashboard:** Visão geral do sistema.
+- **Gestão de Produtos:** Adicionar, editar e remover produtos do catálogo.
+- **Gestão de Pedidos:** Visualização e controle de todos os pedidos da plataforma.
+
+## 🛠️ Como Iniciar
+
+### Pré-requisitos
+- Node.js instalado.
+- Expo Go instalado no seu dispositivo móvel (ou um emulador configurado).
+
+### Instalação
+
+1. Entre na pasta do projeto:
    ```bash
-   npm install
-   npm i expo-image-picker
+   cd eco
    ```
 
-2. Start the app
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
+3. Configure as variáveis de ambiente:
+   Crie um arquivo `.env` na raiz da pasta `eco` e adicione sua chave do Clerk:
+   ```env
+   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=sua_chave_aqui
+   ```
+
+4. Inicie o servidor de desenvolvimento:
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Agora é só escanear o QR Code com o app **Expo Go** ou pressionar `a` para Android ou `i` para iOS se tiver os emuladores configurados.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📂 Estrutura de Pastas
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+eco/
+├── app/                # Rotas e telas (Expo Router)
+│   ├── (auth)/         # Telas de Autenticação
+│   ├── (tabs)/         # Navegação por Abas (Home, Cart, etc)
+│   ├── admin/          # Funcionalidades Administrativas
+│   └── ...             # Outras rotas (Pedidos, Produtos, etc)
+├── assets/             # Imagens, fontes e ícones
+├── components/         # Componentes reutilizáveis
+├── constants/          # Constantes, temas e tipos
+├── context/            # Contextos da aplicação (Cart, Wishlist)
+└── plugins/            # Plugins customizados do Expo
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
